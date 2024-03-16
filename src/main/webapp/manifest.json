@@ -1,6 +1,6 @@
 {
-    "short_name": "Admin Starter",
-    "name": "AdminFaces Starter Application",
+    "short_name": "Pro Nutrition",
+    "name": "ProNutrition Starter Application",
     "icons": [
         {
             "src": "/resources/favicon/favicon-196x196.png",
@@ -18,9 +18,9 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#3c8dbc",
+    "theme_color": "#99FF99",
     "background_color": "#ffffff",
-    "scope": "/admin-starter/",
-    "start_url": "/admin-starter/index.xhtml",
+    "scope": "/pro-nutrition/",
+    "start_url": "/pro-nutrition/index.xhtml",
     "display": "standalone"
 }

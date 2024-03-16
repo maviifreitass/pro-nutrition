@@ -89,46 +89,37 @@
             <!-- /.login-logo -->
             <div class="box login-box-body">
                 <h:form>
-                    <p class="login-box-msg">Sign in to start your session</p>
+                    <p class="login-box-msg">Faça seu login para iniciar a sessão</p>
                     <p:messages closable="true"/>
 
                     <div class="form-group has-feedback">
-                        <p:inputText value="#{logonMB.email}" type="email" styleClass="form-control" placeholder="Just type any value"
+                        <p:inputText value="#{logonMB.email}" type="email" styleClass="form-control" placeholder="Email"
                                      required="true"
                                      requiredMessage="Email is required."/>
                         <i class="fa fa-envelope form-control-feedback" ></i>
                     </div>
                     <div class="form-group has-feedback">
                         <p:inputText value="#{logonMB.password}" type="password" styleClass="form-control"
-                                     placeholder="Just type any value" required="true"
+                                     placeholder="Senha" required="true"
                                      requiredMessage="Password is required."/>
                         <i class="fa fa-lock form-control-feedback" style="font-size: 18px"></i>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p:selectBooleanCheckbox itemLabel="Remember Me" value="#{logonMB.remember}"/>
+                            <p:selectBooleanCheckbox itemLabel="Salvar dados" value="#{logonMB.remember}"/>
                         </div>
                         <p:spacer height="10"/>
-                        <div class="col-xs-12">
+                        <div class="col-xs-12" style="padding-bottom:10px">
                             <p:commandButton styleClass="btn btn-success btn-block" action="#{logonMB.login}" onclick="showBar()" oncomplete="if(args.validationFailed){hideBar()}"
-                                             value="Sign In" update="@form"/>
+                                             value="Entrar" update="@form"/>
                         </div>
                     </div>
                 </h:form>
 
-                <div class="social-auth-links text-center">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i
-                            class="fa fa-facebook"></i> Sign in using
-                        Facebook</a>
-                    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i
-                            class="fa fa-google-plus"></i> Sign in using
-                        Google+</a>
-                </div>
                 <!-- /.social-auth-links -->
 
-                <a href="#">I forgot my password</a><br/>
-                <a href="#" class="text-center">Register a new membership</a>
+                <a href="#">Esqueci minha senha</a><br/>
+                <a href="#" class="text-center">Não tenho uma conta</a>
 
             </div>
             <!-- /.login-box-body -->
