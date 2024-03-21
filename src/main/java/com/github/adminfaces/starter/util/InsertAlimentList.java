@@ -29,7 +29,7 @@ public class InsertAlimentList {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
         List<String> aliments = new ArrayList();
-        aliments.add("Apple");
+        /* aliments.add("Apple");
         aliments.add("Banana");
         aliments.add("Orange");
         aliments.add("Strawberry");
@@ -77,9 +77,29 @@ public class InsertAlimentList {
         aliments.add("Walnuts");
         aliments.add("Cashews");
         aliments.add("Peanuts");
+        aliments.add("Avocado");
+        aliments.add("Quinoa");
+        aliments.add("Kale");
+        aliments.add("Acai");
+        aliments.add("Dragonfruit");
+        aliments.add("Chia");
+        aliments.add("Saffron");
+        aliments.add("Tofu");
+        aliments.add("Mangosteen");
+        aliments.add("Seitan");
+        aliments.add("Kombucha");
+        aliments.add("Spirulina");
+        aliments.add("Jicama");
+        aliments.add("Guava");
+        aliments.add("Kohlrabi");
+        aliments.add("Yuzu");
+        aliments.add("Elderberry");
+        aliments.add("Papaya");
+        aliments.add("Lychee");
+        aliments.add("Arugula");*/
 
-        String sql =
-                  "INSERT INTO aliment "
+        String sql
+                = "INSERT INTO aliment "
                 + "(id, name, calories, fat_total, fat_saturated, protein, sodium, potassium, "
                 + "cholesterol, carbohydrates, fiber, sugar) "
                 + "VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -87,8 +107,8 @@ public class InsertAlimentList {
         String url = "https://api.api-ninjas.com/v1/nutrition?query=";
         int j = 1;
         for (int i = 0; i < aliments.size(); i++) {
-        PostgresWrapper pw = new PostgresWrapper();
-        pw.openPostgresConnection();
+            PostgresWrapper pw = new PostgresWrapper();
+            pw.openPostgresConnection();
             HttpGet httpget = new HttpGet(url + aliments.get(i));
             httpget.setHeader("X-Api-Key", "QpryDjaLeUc6okBwzdGH8A==kQ4xhPPtLNlLmGT5");
             HttpClient client = HttpClientBuilder.create().build();
@@ -119,16 +139,17 @@ public class InsertAlimentList {
                             statement.setDouble(11, node.get("fiber_g").asDouble());
                             statement.setDouble(12, node.get("sugar_g").asDouble());
                             statement.executeUpdate();
+                        } finally {
+                            pw.closeConnection();
                         }
-
                     }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-             pw.closeConnection();
             j++;
         }
     }
