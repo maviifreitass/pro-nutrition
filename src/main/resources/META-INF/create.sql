@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS role (
 -- -----------------------------------------------------
 -- Table user
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   role_id INT,
   username VARCHAR(255),
