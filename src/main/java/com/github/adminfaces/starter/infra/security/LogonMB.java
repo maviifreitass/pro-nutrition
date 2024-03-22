@@ -11,6 +11,8 @@ import java.io.Serializable;
 
 import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import com.github.adminfaces.template.config.AdminConfig;
+import com.pro.nutrition.repository.entity.User;
+import com.pro.nutrition.repository.entity.db.UserDB;
 import jakarta.inject.Inject;
 
 /**
@@ -35,9 +37,18 @@ public class LogonMB extends AdminSession implements Serializable {
     private boolean remember;
     @Inject
     private AdminConfig adminConfig;
+    
+    @Inject
+    private UserDB userDB;
 
 
     public void login() throws IOException {
+   /*     User user = new User();
+        user.setEmail(email); 
+        user.setPassword("HASH12345"); 
+        user.setUsername("MeuTeste"); 
+        userDB.create(user);   */      
+        
         currentUser = email;
         addDetailMessage("Logged in successfully as <b>" + email + "</b>");
         Faces.getExternalContext().getFlash().setKeepMessages(true);
