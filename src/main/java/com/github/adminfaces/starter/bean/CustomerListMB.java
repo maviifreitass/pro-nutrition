@@ -1,8 +1,5 @@
 package com.github.adminfaces.starter.bean;
 
-import com.github.adminfaces.starter.infra.model.Filter;
-import com.github.adminfaces.starter.model.Car;
-import com.github.adminfaces.starter.service.CarService;
 import com.github.adminfaces.template.exception.BusinessException;
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.FilterMeta;
@@ -19,32 +16,46 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.github.adminfaces.starter.infra.model.Filter;
+import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.service.CarService;
 import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
+import com.pro.nutrition.repository.entity.CustomerData;
+import com.pro.nutrition.repository.entity.db.CustomerDB;
+import java.util.ArrayList;
 
 /**
  * Created by rmpestano on 12/02/17.
  */
 @Named
 @ViewScoped
-public class CarListMB implements Serializable {
+public class CustomerListMB implements Serializable {
 
     @Inject
     CarService carService;
 
+    @Inject
+    CustomerDB customerDB;
+
     Integer id;
 
-    LazyDataModel<Car> cars;
+//    LazyDataModel<Car> cars;
+    Filter<CustomerData> filter = new Filter<>(new CustomerData());
 
-    Filter<Car> filter = new Filter<>(new Car());
+    List<CustomerData> selectedCars; //cars selected in checkbox column
 
-    List<Car> selectedCars; //cars selected in checkbox column
+    List<CustomerData> cars = new ArrayList();
 
     List<Car> filteredValue;// datatable filteredValue attribute (column filters)
 
     @PostConstruct
     public void initDataModel() {
-        cars = new LazyDataModel<Car>() {
+
+        System.out.println("TO AQUI!!!!!");
+
+        cars = customerDB.findAll();
+        /*{
 
             @Override
             public int count(Map<String, FilterMeta> map) {
@@ -58,7 +69,6 @@ public class CarListMB implements Serializable {
                             .findAny()
                             .ifPresent(sortField -> {
                                         filter.setSortField(sortField.getKey());
-                                        filter.setSortOrder(getSortOrder(SortOrder.ASCENDING == sortField.getValue().getOrder(), sortField.getValue().getOrder() == SortOrder.DESCENDING));
                                     }
                             );
                 }
@@ -71,11 +81,6 @@ public class CarListMB implements Serializable {
                 return carService.paginate(filter);
             }
 
-            private com.github.adminfaces.starter.infra.model.SortOrder getSortOrder(boolean asc, boolean desc) {
-                return asc ?
-                        com.github.adminfaces.starter.infra.model.SortOrder.ASCENDING : desc ?
-                        com.github.adminfaces.starter.infra.model.SortOrder.DESCENDING : com.github.adminfaces.starter.infra.model.SortOrder.UNSORTED;
-            }
 
             @Override
             public Car getRowData(String key) {
@@ -86,11 +91,11 @@ public class CarListMB implements Serializable {
             public String getRowKey(Car car) {
                 return car.getId().toString();
             }
-        };
+        };*/
     }
 
     public void clear() {
-        filter = new Filter<>(new Car());
+        filter = new Filter<>(new CustomerData());
     }
 
     public List<String> completeModel(String query) {
@@ -101,20 +106,22 @@ public class CarListMB implements Serializable {
         if (id == null) {
             throw new BusinessException("Provide Car ID to load");
         }
-        selectedCars = Arrays.asList(carService.findById(id));
     }
 
     public void delete() {
         int numCars = 0;
-        for (Car selectedCar : selectedCars) {
+        for (CustomerData selectedCar : selectedCars) {
             numCars++;
-            carService.remove(selectedCar);
         }
         selectedCars.clear();
         addDetailMessage(numCars + " cars deleted successfully!");
     }
+    
+    public void selectCar(CustomerData car) {
+        this.selectedCars.add(car);
+    }
 
-    public List<Car> getSelectedCars() {
+    public List<CustomerData> getSelectedCars() {
         return selectedCars;
     }
 
@@ -126,23 +133,23 @@ public class CarListMB implements Serializable {
         this.filteredValue = filteredValue;
     }
 
-    public void setSelectedCars(List<Car> selectedCars) {
+    public void setSelectedCars(List<CustomerData> selectedCars) {
         this.selectedCars = selectedCars;
     }
 
-    public LazyDataModel<Car> getCars() {
+    public List<CustomerData> getCars() {
         return cars;
     }
 
-    public void setCars(LazyDataModel<Car> cars) {
+    public void setCars(List<CustomerData> cars) {
         this.cars = cars;
     }
 
-    public Filter<Car> getFilter() {
+    public Filter<CustomerData> getFilter() {
         return filter;
     }
 
-    public void setFilter(Filter<Car> filter) {
+    public void setFilter(Filter<CustomerData> filter) {
         this.filter = filter;
     }
 

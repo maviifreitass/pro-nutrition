@@ -4,6 +4,7 @@
  */
 package com.pro.nutrition.repository.entity.db;
 
+import com.pro.nutrition.repository.entity.DietPlan;
 import com.pro.nutrition.repository.entity.User;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
  */
 @Named
 @ApplicationScoped
-public class UserDB {
+public class DietPlanDB {
 
     @Inject
     private PostgresWrapper pw;
@@ -33,6 +34,7 @@ public class UserDB {
     private EntityManager em;
 
     public void create(User user) {
+        
         pw.openPostgresConnection();
         try ( Connection connection = pw.getConnection()) {
             LocalDateTime currentDateTime = LocalDateTime.now();
@@ -58,17 +60,17 @@ public class UserDB {
         }
     }
     
-      public User find(Long id) {
+    public DietPlan find(Long id) {
         pw.openPostgresConnection();
-        User u = new User();
+        DietPlan dp = new DietPlan();
         try ( Connection connection = pw.getConnection()) {
             String sql
-                    = "SELECT username FROM users where id = " + id;
+                    = "SELECT name FROM diet_plan where id = " + id;
 
             try (final Statement pwStatement = connection.createStatement()) {
                 ResultSet result = pwStatement.executeQuery(sql);
                 while (result.next()) {
-                    u.setUsername(result.getString("username"));
+                    dp.setName(result.getString("name")); 
                 }
             } finally {
                 pw.closeConnection();
@@ -76,7 +78,7 @@ public class UserDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return u;
+        return dp;
     }
     
     public void getUser(){

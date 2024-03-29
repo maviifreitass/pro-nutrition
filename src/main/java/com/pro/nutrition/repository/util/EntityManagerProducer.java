@@ -4,9 +4,11 @@
  */
 package com.pro.nutrition.repository.util;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Disposes;
 import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -15,9 +17,10 @@ import jakarta.persistence.Persistence;
  *
  * @author maria
  */
+@ApplicationScoped
 public class EntityManagerProducer {
 
-    private EntityManagerFactory factory;
+    private final EntityManagerFactory factory;
 
     public EntityManagerProducer() {
         factory = Persistence.createEntityManagerFactory("pro-nutritionPU");

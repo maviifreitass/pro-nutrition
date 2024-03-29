@@ -3,16 +3,20 @@
   <persistence-unit name="pro-nutritionPU" transaction-type="JTA">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <validation-mode>CALLBACK</validation-mode>
+    
+     <class>com.pro.nutrition.repository.entity.CustomerData</class>
+     
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/pro-nutrition"/>
-      <property name="javax.persistence.jdbc.user" value="admin-nutrition"/>
-      <property name="javax.persistence.jdbc.password" value="admin"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/pro-nutrition"/>
+      <property name="jakarta.persistence.jdbc.user" value="admin-nutrition"/>
+      <property name="jakarta.persistence.jdbc.password" value="admin"/>
+      <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
       <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="jakarta.persistence.schema-generation.scripts.action" value="create"/>
       <property name="jakarta.persistence.schema-generation.scripts.create-target" value="create.sql"/>
     </properties>
+    
   </persistence-unit>
 </persistence>

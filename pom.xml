@@ -33,7 +33,7 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.16</version>
         </dependency>
-          <!--  -->
+        <!--  -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-web-api</artifactId>
@@ -63,6 +63,13 @@
             <version>2.15.3</version>
             <type>jar</type>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <resources>
@@ -98,7 +105,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
             </plugin>
-         <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <executions>

@@ -46,6 +46,9 @@ public class CustomerData implements Serializable {
     @Column(name = "gender")
     private String gender;
 
+    @Column(name = "goal")
+    private String goal;
+
     @Column(name = "diet_plan_id")
     private DietPlan dietPlan;
 
@@ -127,6 +130,19 @@ public class CustomerData implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerData{" + "id=" + id + ", user=" + user + ", height=" + height + ", weight=" + weight + ", age=" + age + ", gender=" + gender + ", dietPlan=" + dietPlan + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
     }
 
 }
