@@ -2,25 +2,17 @@ package com.github.adminfaces.starter.bean;
 
 import com.github.adminfaces.template.exception.BusinessException;
 import org.omnifaces.cdi.ViewScoped;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.github.adminfaces.starter.infra.model.Filter;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
-import static com.github.adminfaces.template.util.Assert.has;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
@@ -52,7 +44,7 @@ public class CustomerListMB implements Serializable {
     @PostConstruct
     public void initDataModel() {
 
-        System.out.println("TO AQUI!!!!!");
+        System.out.println("[initDataModel] start");
 
         cars = customerDB.findAll();
         /*{

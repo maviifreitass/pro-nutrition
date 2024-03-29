@@ -28,13 +28,6 @@
                         <p:commandButton action="/car-form?faces-redirect=true" icon="fa fa-plus"
                                          value="Novo" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Delete Selected" icon="fa fa-trash" styleClass="btn-danger"
-                                         action="#{customerListMB.delete}"
-                                         disabled="#{empty customerListMB.selectedCars or customerListMB.selectedCars.size() == 0}"
-                                         process="@this" update="@form"
-                                         >
-                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
-                        </p:commandButton>
                         <p:spacer width="5"/>
                     </div>
 
@@ -72,11 +65,20 @@
 
                         <p:column width="5%" styleClass="align-center"/> 
 
-                        <p:column headerText="Name">
+                        <p:column headerText="Nome">
                             #{c.user.username}
                         </p:column>
-                        <p:column headerText="Price">
+                        <p:column headerText="Altura">
                             #{c.height}
+                        </p:column>
+                        <p:column headerText="Peso">
+                            #{c.weight}
+                        </p:column>
+                        <p:column headerText="Idade">
+                            #{c.age}
+                        </p:column>
+                        <p:column headerText="Objetivo">
+                            #{c.goal}
                         </p:column>
                     </p:dataTable>
                 </div>
