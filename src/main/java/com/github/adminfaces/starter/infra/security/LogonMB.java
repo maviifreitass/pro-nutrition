@@ -50,7 +50,6 @@ public class LogonMB extends AdminSession implements Serializable {
         userDB.create(user);   */      
         
         currentUser = email;
-        addDetailMessage("Logged in successfully as <b>" + email + "</b>");
         Faces.getExternalContext().getFlash().setKeepMessages(true);
         Faces.redirect(adminConfig.getIndexPage());
     }
