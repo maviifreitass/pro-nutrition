@@ -25,13 +25,15 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
-                        <p:commandButton action="/car-form?faces-redirect=true" icon="fa fa-plus"
+                        <p:commandButton action="/customer-form?faces-redirect=true" icon="fa fa-plus"
                                          value="Novo" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
-                        <p:spacer width="5"/>
+                        <p:commandButton value="Visualizar" update="@(.ui-dialog)" styleClass="btn-info"
+                                         disabled="#{empty customerListMB.selectedCars or customerListMB.selectedCars.size() == 0}"
+                                         oncomplete="PF('selectedCars').show()" icon="fa fa-search"/>
                     </div>
 
-                    <p:splitButton value="New" action="/car-form?faces-redirect=true"
+                    <p:splitButton value="New" action="/customer-form?faces-redirect=true"
                                    icon="fa fa-plus"
                                    styleClass="hidden-md hidden-lg btn-primary">
                         <p:menuitem value="Delete Selected" action="#{customerListMB.delete}"
@@ -51,19 +53,17 @@
                     <p:dataTable widgetVar="carsTable" var="c" value="#{customerListMB.cars}" rows="5"
                                  rowKey="#{c.id}" lazy="true" paginator="true"
                                  filteredValue="#{customerListMB.filteredValue}"
-                                 paginatorPosition="bottom" selection="#{customerListMB.selectedCars}"
+                                 paginatorPosition="bottom" selection="#{customerListMB.selectedCars}" selectionMode="single"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
-                                 rowsPerPageTemplate="5,10,15,20,30"
+                                 rowsPerPageTemplate="5,10,15,20,30" 
                                  >
 
                         <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
                         <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
-                        <p:ajax event="rowSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
-                        <p:ajax event="rowUnselect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowSelect" listener="#{customerListMB.selectedCars}"  update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselect" listener="#{customerListMB.selectedCars}" update="@(.ui-button, .ui-confirm-dialog)"/>
                         <p:ajax event="toggleSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
-
-                        <p:column width="5%" styleClass="align-center"/> 
 
                         <p:column headerText="Nome">
                             #{c.user.username}

@@ -60,6 +60,9 @@ public class CustomerData implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
+    public CustomerData() {
+    }
+
     public Long getId() {
         return id;
     }

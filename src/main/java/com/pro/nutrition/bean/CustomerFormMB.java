@@ -2,41 +2,40 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.adminfaces.starter.bean;
+package com.pro.nutrition.bean;
 
 import com.github.adminfaces.starter.model.Car;
-import com.github.adminfaces.starter.service.CarService;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
+import jakarta.annotation.ManagedBean;
 
 import java.io.Serializable;
 
 import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
+import com.pro.nutrition.repository.entity.CustomerData;
+import com.pro.nutrition.repository.entity.db.CustomerDB;
 
 /**
  * @author rmpestano
  */
 @Named
 @ViewScoped
-public class CarFormMB implements Serializable {
+@ManagedBean
+public class CustomerFormMB implements Serializable {
+
     private Integer id;
     private Car car;
 
+    private CustomerData customer;
+
     @Inject
-    CarService carService;
+    CustomerDB customerDB;
 
     public void init() {
-        if (Faces.isAjaxRequest()) {
-            return;
-        }
-        if (has(id)) {
-            car = carService.findById(id);
-        } else {
-            car = new Car();
-        }
+        customer = new CustomerData();
     }
 
     public Integer getId() {
@@ -55,10 +54,8 @@ public class CarFormMB implements Serializable {
         this.car = car;
     }
 
-
     public void remove() {
         if (has(car) && has(car.getId())) {
-            carService.remove(car);
             addDetailMessage("Car " + car.getModel()
                     + " removed successfully");
             Faces.getFlash().setKeepMessages(true);
@@ -67,14 +64,8 @@ public class CarFormMB implements Serializable {
     }
 
     public void save() {
-        String msg;
-        if (car.getId() == null) {
-            carService.insert(car);
-            msg = "Car " + car.getModel() + " created successfully";
-        } else {
-            carService.update(car);
-            msg = "Car " + car.getModel() + " updated successfully";
-        }
+        String msg = "Salvo!";
+        System.out.println(customer);
         addDetailMessage(msg);
     }
 
@@ -87,5 +78,12 @@ public class CarFormMB implements Serializable {
         return car == null || car.getId() == null;
     }
 
+    public CustomerData getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerData customer) {
+        this.customer = customer;
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.bean;
+package com.pro.nutrition.bean;
 
 import com.github.adminfaces.template.exception.BusinessException;
 import org.omnifaces.cdi.ViewScoped;
@@ -39,13 +39,11 @@ public class CustomerListMB implements Serializable {
 
     List<CustomerData> cars = new ArrayList();
 
-    List<Car> filteredValue;// datatable filteredValue attribute (column filters)
+    List<CustomerData> filteredValue;// datatable filteredValue attribute (column filters)
 
     @PostConstruct
     public void initDataModel() {
-
         System.out.println("[initDataModel] start");
-
         cars = customerDB.findAll();
         /*{
 
@@ -108,7 +106,7 @@ public class CustomerListMB implements Serializable {
         selectedCars.clear();
         addDetailMessage(numCars + " cars deleted successfully!");
     }
-    
+
     public void selectCar(CustomerData car) {
         this.selectedCars.add(car);
     }
@@ -117,11 +115,11 @@ public class CustomerListMB implements Serializable {
         return selectedCars;
     }
 
-    public List<Car> getFilteredValue() {
+    public List<CustomerData> getFilteredValue() {
         return filteredValue;
     }
 
-    public void setFilteredValue(List<Car> filteredValue) {
+    public void setFilteredValue(List<CustomerData> filteredValue) {
         this.filteredValue = filteredValue;
     }
 
