@@ -5,19 +5,16 @@
 package com.pro.nutrition.repository.entity.db;
 
 import com.pro.nutrition.repository.entity.DietPlan;
-import com.pro.nutrition.repository.entity.User;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import java.util.List;
 
 /**
  *
@@ -29,59 +26,35 @@ public class DietPlanDB {
 
     @Inject
     private PostgresWrapper pw;
-    
+
     @Inject
     private EntityManager em;
+    
+    public DietPlan findById(Long id) {
+        return em.find(DietPlan.class, id);
+    }
 
-    public void create(User user) {
-        
-        pw.openPostgresConnection();
-        try ( Connection connection = pw.getConnection()) {
-            LocalDateTime currentDateTime = LocalDateTime.now();
+    public List<DietPlan> findAll() {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<DietPlan> criteriaQuery = criteriaBuilder.createQuery(DietPlan.class);
+        Root<DietPlan> root = criteriaQuery.from(DietPlan.class);
+        criteriaQuery.select(root);
 
-            // Convertendo para Timestamp
-            Timestamp currentTimestamp = Timestamp.valueOf(currentDateTime);
-            
-            String sql =
-            "INSERT INTO users (role_id, username, email, password, create_time) "
-            + "VALUES (?, ?, ?, ?, ?)";
-            try ( PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, 1);
-                statement.setString(2, user.getUsername());
-                statement.setString(3, user.getEmail());
-                statement.setString(4, user.getPassword());
-                statement.setTimestamp(5, currentTimestamp);
-                statement.executeUpdate();
-            } finally {
-                pw.closeConnection();
+        return em.createQuery(criteriaQuery).getResultList();
+    }
+
+    public void save(DietPlan customer) {
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            em.merge(customer); // Salva ou atualiza a entidade
+            transaction.commit(); // Confirma a transação
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Rollback se ocorrer um erro
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Trate o erro de alguma forma adequada
         }
     }
     
-    public DietPlan find(Long id) {
-        pw.openPostgresConnection();
-        DietPlan dp = new DietPlan();
-        try ( Connection connection = pw.getConnection()) {
-            String sql
-                    = "SELECT name FROM diet_plan where id = " + id;
-
-            try (final Statement pwStatement = connection.createStatement()) {
-                ResultSet result = pwStatement.executeQuery(sql);
-                while (result.next()) {
-                    dp.setName(result.getString("name")); 
-                }
-            } finally {
-                pw.closeConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return dp;
-    }
-    
-    public void getUser(){
-     
-    }
 }

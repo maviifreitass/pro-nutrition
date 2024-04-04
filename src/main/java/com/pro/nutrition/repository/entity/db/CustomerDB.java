@@ -45,7 +45,6 @@ public class CustomerDB implements Serializable {
     }
 
     public List<CustomerData> findAll() {
-        System.out.println("CRITERIA BUILDER ALL");
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<CustomerData> criteriaQuery = criteriaBuilder.createQuery(CustomerData.class);
         Root<CustomerData> root = criteriaQuery.from(CustomerData.class);
@@ -55,7 +54,6 @@ public class CustomerDB implements Serializable {
     }
 
     public void save(CustomerData customer) {
-        System.out.println("############## SAVE ###############");
         EntityTransaction transaction = em.getTransaction();
 
         try {

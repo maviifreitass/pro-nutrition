@@ -10,13 +10,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import java.util.List;
 
 /**
  *
@@ -28,58 +26,35 @@ public class UserDB {
 
     @Inject
     private PostgresWrapper pw;
-    
+
     @Inject
     private EntityManager em;
 
-    public void create(User user) {
-        pw.openPostgresConnection();
-        try ( Connection connection = pw.getConnection()) {
-            LocalDateTime currentDateTime = LocalDateTime.now();
-
-            // Convertendo para Timestamp
-            Timestamp currentTimestamp = Timestamp.valueOf(currentDateTime);
-            
-            String sql =
-            "INSERT INTO users (role_id, username, email, password, create_time) "
-            + "VALUES (?, ?, ?, ?, ?)";
-            try ( PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, 1);
-                statement.setString(2, user.getUsername());
-                statement.setString(3, user.getEmail());
-                statement.setString(4, user.getPassword());
-                statement.setTimestamp(5, currentTimestamp);
-                statement.executeUpdate();
-            } finally {
-                pw.closeConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public User findById(Long id) {
+        return em.find(User.class, id);
     }
-    
-      public User find(Long id) {
-        pw.openPostgresConnection();
-        User u = new User();
-        try ( Connection connection = pw.getConnection()) {
-            String sql
-                    = "SELECT username FROM users where id = " + id;
 
-            try (final Statement pwStatement = connection.createStatement()) {
-                ResultSet result = pwStatement.executeQuery(sql);
-                while (result.next()) {
-                    u.setUsername(result.getString("username"));
-                }
-            } finally {
-                pw.closeConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return u;
+    public List<User> findAll() {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
+        criteriaQuery.select(root);
+
+        return em.createQuery(criteriaQuery).getResultList();
     }
-    
-    public void getUser(){
-     
+
+    public void save(User customer) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            em.merge(customer); // Salva ou atualiza a entidade
+            transaction.commit(); // Confirma a transação
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Rollback se ocorrer um erro
+            }
+            e.printStackTrace(); // Trate o erro de alguma forma adequada
+        }
     }
 }

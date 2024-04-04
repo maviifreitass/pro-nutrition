@@ -10,9 +10,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import java.util.List;
 
 /**
  *
@@ -28,36 +30,32 @@ public class AlimentDB {
     @Inject
     private EntityManager em;
 
-    public void create(Aliment aliment) {
-        pw.openPostgresConnection();
-        try ( Connection connection = pw.getConnection()) {
-            String sql
-                    = "INSERT INTO aliment "
-                    + "(name, calories, fat_total, fat_saturated, protein, sodium, potassium, "
-                    + "cholesterol, carbohydrates, fiber, sugar) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            try ( PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, aliment.getName());
-                statement.setDouble(2, aliment.getCalories());
-                statement.setDouble(3, aliment.getFatTotal());
-                statement.setDouble(4, aliment.getFatSatured());
-                statement.setDouble(5, aliment.getProtein());
-                statement.setDouble(6, aliment.getSodium());
-                statement.setDouble(7, aliment.getPotassium());
-                statement.setDouble(8, aliment.getCholesterol());
-                statement.setDouble(9, aliment.getCarbohydrates());
-                statement.setDouble(10, aliment.getFiber());
-                statement.setDouble(11, aliment.getSugar());
-                statement.executeUpdate();
-            } finally {
-                pw.closeConnection();
+    public Aliment findById(Long id) {
+        return em.find(Aliment.class, id);
+    }
+
+    public List<Aliment> findAll() {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Aliment> criteriaQuery = criteriaBuilder.createQuery(Aliment.class);
+        Root<Aliment> root = criteriaQuery.from(Aliment.class);
+        criteriaQuery.select(root);
+
+        return em.createQuery(criteriaQuery).getResultList();
+    }
+
+    public void save(Aliment customer) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            em.merge(customer); // Salva ou atualiza a entidade
+            transaction.commit(); // Confirma a transação
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Rollback se ocorrer um erro
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Trate o erro de alguma forma adequada
         }
     }
 
-    public void getUser() {
-
-    }
 }
