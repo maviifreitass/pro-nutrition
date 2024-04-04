@@ -27,7 +27,6 @@ public class PostgresWrapper {
         try {
             String url = "jdbc:postgresql://localhost:5432/pro-nutrition";
             connection = DriverManager.getConnection(url, "admin-nutrition", "admin");
-            Logger.getLogger(PostgresWrapper.class.getName()).log(Level.INFO, "Connected!");
         } catch (SQLRecoverableException ex) {
             Logger.getLogger(PostgresWrapper.class.getName()).log(Level.SEVERE, "Network connection error!", ex);
             return false;

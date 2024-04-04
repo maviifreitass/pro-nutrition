@@ -64,9 +64,8 @@ public class CustomerFormMB implements Serializable {
     }
 
     public void save() {
-        String msg = "Salvo!";
-        System.out.println(customer);
-        addDetailMessage(msg);
+        customerDB.save(customer); 
+        addDetailMessage("Salvo!");
     }
 
     public void clear() {

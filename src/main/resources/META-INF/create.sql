@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS customer_data (
   age INT,
   gender VARCHAR(45),
   goal VARCHAR(255),
+  name VARCHAR(255),
   diet_plan_id INT,
   create_time TIMESTAMP,
   update_time TIMESTAMP,

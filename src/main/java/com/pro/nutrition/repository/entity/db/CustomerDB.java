@@ -10,12 +10,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,84 +30,45 @@ public class CustomerDB implements Serializable {
 
     @Inject
     private EntityManager em;
-    
+
     @Inject
     private UserDB userDB;
-    
+
     @Inject
     private DietPlanDB dietPlanDB;
 
     public CustomerDB() {
     }
 
-    /* @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }*/
-    /**
-     *
-     * @return
-     */
-    /*  @Override
-    public List<CustomerData> findAll() {
-        return super.findAll();
-    }*/
- /*    @Override
-    public CustomerData find(Long id) {
-        return super.find(id);
-    }*/
-    public List<CustomerData> findAll() {
-        pw.openPostgresConnection();
-        List<CustomerData> customers = new ArrayList();
-        try ( Connection connection = pw.getConnection()) {
-            String sql
-                    = "SELECT C.HEIGHT, C.WEIGHT, C.AGE, C.GENDER, C.GOAL, "
-                    + "C.USER_ID, C.DIET_PLAN_ID "
-                    + "FROM CUSTOMER_DATA C ";
-
-            try (final Statement pwStatement = connection.createStatement()) {
-                ResultSet result = pwStatement.executeQuery(sql);
-                while (result.next()) {
-                    CustomerData c = new CustomerData();
-                    c.setHeight(result.getDouble("height"));
-                    c.setWeight(result.getDouble("weight"));
-                    c.setAge(result.getInt("age"));
-                    c.setGender(result.getString("gender"));
-                    c.setGoal(result.getString("goal"));
-                    c.setUser(userDB.find(result.getLong("user_id"))); 
-                    c.setDietPlan(dietPlanDB.find(result.getLong("diet_plan_id"))); 
-                    customers.add(c);
-                }
-            } finally {
-                pw.closeConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(customers);
-        return customers;
+    public CustomerData findById(Long id) {
+        return em.find(CustomerData.class, id);
     }
 
-    public CustomerData find(Long id) {
-        pw.openPostgresConnection();
-        CustomerData c = new CustomerData();
-        try ( Connection connection = pw.getConnection()) {
-            String sql
-                    = "SELECT * FROM CUSTOMER_dATA where id = " + id;
+    public List<CustomerData> findAll() {
+        System.out.println("CRITERIA BUILDER ALL");
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<CustomerData> criteriaQuery = criteriaBuilder.createQuery(CustomerData.class);
+        Root<CustomerData> root = criteriaQuery.from(CustomerData.class);
+        criteriaQuery.select(root);
 
-            try (final Statement pwStatement = connection.createStatement()) {
-                ResultSet result = pwStatement.executeQuery(sql);
-                while (result.next()) {
-                    c.setHeight(result.getDouble("height"));
-                    c.setWeight(result.getDouble("weight"));
-                }
-            } finally {
-                pw.closeConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return c;
+        return em.createQuery(criteriaQuery).getResultList();
     }
 
+    public void save(CustomerData customer) {
+        System.out.println("############## SAVE ###############");
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            em.merge(customer); // Salva ou atualiza a entidade
+            transaction.commit(); // Confirma a transação
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Rollback se ocorrer um erro
+            }
+            e.printStackTrace(); // Trate o erro de alguma forma adequada
+        }
+    }
 }
+
+

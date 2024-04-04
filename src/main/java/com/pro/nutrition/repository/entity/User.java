@@ -22,39 +22,43 @@ import jakarta.persistence.Table;
  * @author maria
  */
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public User() {
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
-    
-    @Column(name="username")
+
+    @Column(name = "username")
     private String username;
-   
-    @Column(name="email")
+
+    @Column(name = "email")
     private String email;
-    
-    @Column(name="password")
+
+    @Column(name = "password")
     private String password;
-   
-    @Column(name="create_time")
+
+    @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-   
-    @Column(name="update_time")
+
+    @Column(name = "update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
-    
-    @Column(name="delete_time")
+
+    @Column(name = "delete_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deleteTime;
-    
+
     public Long getId() {
         return id;
     }
@@ -117,6 +121,11 @@ public class User implements Serializable {
 
     public void setDeleteTime(Date deleteTime) {
         this.deleteTime = deleteTime;
+    }
+
+    @Override
+    public String toString() {
+        return new com.google.gson.Gson().toJson(this);
     }
 
 }

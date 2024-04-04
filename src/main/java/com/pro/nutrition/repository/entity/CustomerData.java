@@ -27,7 +27,7 @@ public class CustomerData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -49,7 +49,8 @@ public class CustomerData implements Serializable {
     @Column(name = "goal")
     private String goal;
 
-    @Column(name = "diet_plan_id")
+    @ManyToOne
+    @JoinColumn(name = "diet_plan_id")
     private DietPlan dietPlan;
 
     @Column(name = "create_time")
@@ -59,6 +60,9 @@ public class CustomerData implements Serializable {
     @Column(name = "update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+
+    @Column(name = "name")
+    private String name;
 
     public CustomerData() {
     }
@@ -143,9 +147,17 @@ public class CustomerData implements Serializable {
         this.goal = goal;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
-        return "CustomerData{" + "id=" + id + ", user=" + user + ", height=" + height + ", weight=" + weight + ", age=" + age + ", gender=" + gender + ", dietPlan=" + dietPlan + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
+        return new com.google.gson.Gson().toJson(this);
     }
 
 }

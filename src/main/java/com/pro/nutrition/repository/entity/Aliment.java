@@ -22,7 +22,7 @@ public class Aliment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -154,4 +154,9 @@ public class Aliment implements Serializable {
         this.sugar = sugar;
     }
 
+    @Override
+    public String toString() {
+        return new com.google.gson.Gson().toJson(this);
+    }
+    
 }
