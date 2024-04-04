@@ -97,10 +97,22 @@
                             <p:outputLabel value="Peso (kg)" for="inptWeight"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
-                            <p:inputNumber id="inptWeight" value="#{customerFormMB.customer.weight}" required="true" decimalPlaces="2" decimalSeparator="," thousandSeparator="."/>
-                            <span class="help-block"> 
-                                <p:message for="inptWeight" /> 
-                            </span>
+                            <p:column>
+                            <p:inputNumber id="inptWeight" value="#{customerFormMB.customer.weight}" onkeyup="formatWeight(this)" />
+                        </p:column>
+                        <script>
+                            function formatWeight(element) {
+                                var value = element.value;
+                                // Remove todos os caracteres que não são dígitos ou ponto
+                                value = value.replace(/[^\d,]/g, "");
+                                // Adiciona o ponto para separar decimais, se não houver
+                                if (value.indexOf(",") === -2) {
+                                    value = value + ",";
+                                }
+                                // Atualiza o valor do campo
+                                element.value = value; 
+                            }
+                        </script>
                         </div>
                     </div>  
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
