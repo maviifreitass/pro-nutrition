@@ -74,10 +74,22 @@
                             <p:outputLabel value="Altura (m)" for="inptHeight"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
-                            <p:inputNumber id="inptHeight" value="#{customerFormMB.customer.height}" required="true" decimalPlaces="2" decimalSeparator=","/>
-                            <span class="help-block"> 
-                                <p:message for="inptHeight" /> 
-                            </span>
+                            <p:column>
+                            <p:inputNumber id="inptHeight" value="#{customerFormMB.customer.height}" onkeyup="formatHeight(this)" />
+                        </p:column>
+                        <script>
+                            function formatHeight(element) {
+                                var value = element.value;
+                                // Remove todos os caracteres que não são dígitos ou ponto
+                                value = value.replace(/[^\d,]/g, "");
+                                // Adiciona o ponto para separar decimais, se não houver
+                                if (value.indexOf(",") === -1) {
+                                    value = value + ",";
+                                }
+                                // Atualiza o valor do campo
+                                element.value = value; 
+                            }
+                        </script>
                         </div>
                     </div> 
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
