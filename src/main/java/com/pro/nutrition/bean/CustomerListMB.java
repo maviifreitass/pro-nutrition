@@ -10,12 +10,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.github.adminfaces.starter.infra.model.Filter;
-import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
+import java.util.Map;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 
 /**
  * Created by rmpestano on 12/02/17.
@@ -32,19 +35,43 @@ public class CustomerListMB implements Serializable {
 
     Integer id;
 
-//    LazyDataModel<Car> cars;
+    LazyDataModel<CustomerData> cars;
     Filter<CustomerData> filter = new Filter<>(new CustomerData());
 
     List<CustomerData> selectedCars; //cars selected in checkbox column
 
-    List<CustomerData> cars = new ArrayList();
-
+    //   List<CustomerData> cars = new ArrayList();
     List<CustomerData> filteredValue;// datatable filteredValue attribute (column filters)
 
     @PostConstruct
     public void initDataModel() {
         System.out.println("[initDataModel] start");
-        cars = customerDB.findAll();
+        System.out.println("entrou");
+        cars = new LazyDataModel<CustomerData>() {
+       
+            @Override
+            public CustomerData getRowData(String key) {
+                return customerDB.findById(Long.valueOf(key));
+            }
+
+            @Override
+            public String getRowKey(CustomerData car) {
+                return car.getId().toString();
+            }
+
+            @Override
+            public int count(Map<String, FilterMeta> map) {
+                return 1;
+            }
+
+            @Override
+            public List<CustomerData> load(int first, int pageSize, Map<String, SortMeta> sortMap, Map<String, FilterMeta> filterMap) {
+                // Aqui você precisa escrever a lógica para buscar os dados do seu banco de dados
+                // Exemplo simplificado de como você pode chamar um método do seu serviço para buscar os dados
+                List<CustomerData> dataList = customerDB.findAll();
+                return dataList;
+            }
+        };
         /*{
 
             @Override
@@ -82,6 +109,8 @@ public class CustomerListMB implements Serializable {
                 return car.getId().toString();
             }
         };*/
+
+
     }
 
     public void clear() {
@@ -127,11 +156,18 @@ public class CustomerListMB implements Serializable {
         this.selectedCars = selectedCars;
     }
 
-    public List<CustomerData> getCars() {
+//    public List<CustomerData> getCars() {
+//        return cars;
+//    }
+//
+//    public void setCars(List<CustomerData> cars) {
+//        this.cars = cars;
+//    }
+    public LazyDataModel<CustomerData> getCars() {
         return cars;
     }
 
-    public void setCars(List<CustomerData> cars) {
+    public void setCars(LazyDataModel<CustomerData> cars) {
         this.cars = cars;
     }
 
