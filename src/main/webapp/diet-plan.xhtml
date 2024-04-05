@@ -29,9 +29,6 @@
                 font-weight: bold
             }
 
-            .ui-selectmanymenu {
-                width: 175px;
-            }
         </style>
     </ui:define>
 
@@ -50,9 +47,8 @@
                                 <p:outputLabel value="Paciente"/>
                             </div>
                             <div class="ui-sm-12 ui-g-11" >
-                                <p:selectOneMenu id="comboBox" value="Otávio">
-                                    <f:selectItem itemLabel="Flávio" itemValue="Flávio" />
-                                    <f:selectItem itemLabel="Otávio" itemValue="Otávio" />
+                                <p:selectOneMenu id="comboBox" value="#{dietPlanMB.selectedCustomerData}">
+                                    <f:selectItems value="#{dietPlanMB.customers}" var="customer" itemLabel="#{customer.name}" itemValue="#{customer}" />
                                 </p:selectOneMenu>
                             </div>
                         </div>
@@ -68,7 +64,6 @@
                             </div>
                         </div>
 
-                        <p:outputLabel value="Refeições:"/>
                         <ui:include src="/WEB-INF/templates/meals.xhtml" />
 
                     </div>

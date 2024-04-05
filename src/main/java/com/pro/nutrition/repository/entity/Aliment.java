@@ -34,8 +34,8 @@ public class Aliment implements Serializable {
     @Column(name = "fat_total")
     private Double fatTotal;
 
-    @Column(name = "fat_satured")
-    private Double fatSatured;
+    @Column(name = "fat_saturated")
+    private Double fatSaturated;
 
     @Column(name = "protein")
     private Double protein;
@@ -90,12 +90,12 @@ public class Aliment implements Serializable {
         this.fatTotal = fatTotal;
     }
 
-    public Double getFatSatured() {
-        return fatSatured;
+    public Double getFatSaturated() {
+        return fatSaturated;
     }
 
-    public void setFatSatured(Double fatSatured) {
-        this.fatSatured = fatSatured;
+    public void setFatSaturated(Double fatSaturated) {
+        this.fatSaturated = fatSaturated;
     }
 
     public Double getProtein() {

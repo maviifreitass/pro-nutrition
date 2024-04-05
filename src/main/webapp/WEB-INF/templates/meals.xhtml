@@ -6,38 +6,94 @@
 
     <p:tabView>
         <p:tab title="Café da manhã">
-            <h:panelGrid columns="2" cellpadding="10">
-                <h:outputText
-                    value="The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding.
-                    His beloved son Michael has just come home from the war, but does not intend to become part of his father's business.
-                    Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect,
-                    but given to ruthless violence whenever anything stands against the good of the family." />
+            <h:panelGrid>
+                <div class="ui-g ui-fluid">
+                    <div>
+                        <p:outputLabel value="Descrição" for="inptDescriptionBreakfast"/>
+                        <p:inputText id="inptDescriptionBreakfast" value=" " style="width: 500px;"/> 
+                    </div>
+                    <p:spacer width="5"/>
+                    <div>
+                        <p:outputLabel for="alimentsBreakfast" value="Alimento:" />
+                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.selectedAliments}" 
+                                          var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
+                            <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
+                                           itemLabel="#{aliment.name}" itemValue="#{aliment}" />
+
+                            <p:column style="padding: 10px; width: 10px;">
+                                <p:inputText size="3" style="width: 75px;" onclick="stopPropagation(event);" />
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{aliment.name}" />
+                            </p:column>
+                        </p:selectManyMenu>
+
+                    </div>
+                </div>
             </h:panelGrid>
         </p:tab>
         <p:tab title="Almoço">
-            <h:panelGrid columns="2" cellpadding="10">
-                <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.
-                              In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,
-                              killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows." />
+            <h:panelGrid>
+                <div class="ui-g ui-fluid">
+                    <div>
+                        <p:outputLabel value="Descrição" for="inptDescriptionLunch"/>
+                        <p:inputText id="inptDescriptionLunch" value=" " style="width: 500px;"/> 
+                    </div>
+                    <p:spacer width="5"/>
+                    <div>
+                        <p:outputLabel for="alimentsLunch" value="Alimento:" />
+                        <p:selectManyMenu id="alimentsLunch" value="#{dietPlanMB.selectedAliments}" 
+                                          var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
+                            <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
+                                           itemLabel="#{aliment.name}" itemValue="#{aliment}" />
+
+                            <p:column style="padding: 10px; width: 10px;">
+                                <p:inputText  size="3" style="width: 75px;" onclick="stopPropagation(event);" />
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{aliment.name}" />
+                            </p:column>
+                        </p:selectManyMenu>
+
+                    </div>
+                </div>
             </h:panelGrid>
         </p:tab>
         <p:tab title="Janta">
-            <h:panelGrid columns="2" cellpadding="10">
-                <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.
-                              Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate." />
-                <div class="ui-sm-12 ui-g-11">
-                    <p:outputLabel for="advanced" value="Alimento:" />
-                </div>
-                <p:selectManyMenu id="advanced" value="#{selectManyView.countries}" 
-                                  var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
-                    <f:selectItems value="#{selectManyView.countries}" var="theme" itemLabel="#{countries}" itemValue="#{countries}" />
+            <h:panelGrid>
+                <div class="ui-g ui-fluid">
+                    <div>
+                        <p:outputLabel value="Descrição" for="inptDescriptionDinner"/>
+                        <p:inputText id="inptDescriptionDinner" value=" " style="width: 500px;"/> 
+                    </div>
+                    <p:spacer width="5"/>
+                    <div>
+                        <p:outputLabel for="alimentsDinner" value="Alimento:" />
+                        <p:selectManyMenu id="alimentsDinner" value="#{dietPlanMB.selectedAliments}" 
+                                          var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
+                            <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
+                                           itemLabel="#{aliment.name}" itemValue="#{aliment}" />
 
-                    <p:column>
-                        <h:outputText value="Pão" />
-                    </p:column>
-                </p:selectManyMenu>
+                            <p:column style="padding: 10px; width: 10px;">
+                                <p:inputText size="3" style="width: 75px;" onclick="stopPropagation(event);" />
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{aliment.name}" />
+                            </p:column>
+                        </p:selectManyMenu>
+
+                    </div>
+                </div>
             </h:panelGrid>
         </p:tab>
     </p:tabView>
+    <script>
+        function stopPropagation(event) {
+            event.stopPropagation();
+        }
+    </script>
 
 </ui:composition>
