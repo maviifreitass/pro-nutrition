@@ -33,7 +33,9 @@
                                          value="Novo" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
                         <p:commandButton value="Visualizar" update="@(.ui-dialog)" styleClass="btn-info"
-                                         oncomplete="PF('selectedCars').show()" icon="fa fa-search"/>
+                                         oncomplete="PF('selectedCustomer').show()" icon="fa fa-search"/>
+                        <p:commandButton value="Deletar" update="@(.ui-dialog)" styleClass="btn-danger"
+                                         oncomplete="PF('deleteCustomer').show()" icon="fa fa-trash"/>
                     </div>
 
                     <p:splitButton value="New" action="/customer-form?faces-redirect=true"
@@ -84,7 +86,7 @@
             </p:confirmDialog>
         </h:form>
 
-        <p:dialog header="Informações do Cliente" widgetVar="selectedCars" height="250"
+        <p:dialog header="Informações do Cliente" widgetVar="selectedCustomer" height="200"
                   width="400" responsive="true" styleClass="box-success">
             <p:dataList id="selectedCarsList" value="#{customerListMB.selectedCustomerData}" var="customer"
                         type="definition">
@@ -101,6 +103,12 @@
                 </div>
             </p:dataList>
         </p:dialog>
+        <p:dialog header="Você tem certeza?" widgetVar="deleteCustomer" responsive="true" styleClass="box-danger box-solid">
+                <p:commandButton value="Sim" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check" action="#{customerFormMB.remove(customer)}" oncomplete="PF('deleteCustomer').hide()" />
+                <p:commandButton value="Não" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close" onclick="PF('deleteCustomer').hide()" />
+                 </p:dialog>
 
     </ui:define>
 

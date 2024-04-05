@@ -41,9 +41,9 @@ a#logout {
 }
 
 .profileImage {
-    width: 100px; /* Largura da imagem */
+    width: 120px; /* Largura da imagem */
     height: auto; /* Mantém a proporção original da imagem */
-    margin-right: 10px; /* Espaçamento à direita para separar os dados do cliente */
+    margin-right: 8px; /* Espaçamento à direita para separar os dados do cliente */
 }
 
 #profileImage {
