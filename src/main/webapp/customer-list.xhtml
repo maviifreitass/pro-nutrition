@@ -29,7 +29,6 @@
                                          value="Novo" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
                         <p:commandButton value="Visualizar" update="@(.ui-dialog)" styleClass="btn-info"
-                                         disabled="#{empty customerListMB.selectedCars or customerListMB.selectedCars.size() == 0}"
                                          oncomplete="PF('selectedCars').show()" icon="fa fa-search"/>
                     </div>
 
@@ -56,7 +55,7 @@
                                  >
 
                         <p:column headerText="Nome">
-                            #{c.user.username}
+                            #{c.name}
                         </p:column>
                         <p:column headerText="Altura">
                             #{c.height}
@@ -81,11 +80,30 @@
             </p:confirmDialog>
         </h:form>
 
-        <p:dialog header="Selected cars" widgetVar="selectedCars" height="250"
+        <p:dialog header="Informações do Cliente" widgetVar="selectedCars" height="250"
                   width="400" responsive="true" styleClass="box-success">
-            <p:dataList id="selectedCarsList" value="#{customerListMB.selectedCars}" var="car"
+            <p:dataList id="selectedCarsList" value="#{customerListMB.selectedCustomerData}" var="customer"
                         type="definition">
-                ID: #{car.user.username} - Name: #{car.user.username} - Model: #{car.user.username}
+                
+                <p:column headerText="Nome">
+                <h:outputText value="#{customer.name}" />
+            </p:column>
+
+            <p:column headerText="Idade">
+                <h:outputText value="#{customer.age}" />
+            </p:column>
+
+            <p:column headerText="Altura">
+                <h:outputText value="#{customer.height}" />
+            </p:column>
+
+            <p:column headerText="Peso">
+                <h:outputText value="#{customer.weight}" />
+            </p:column>
+                <p:column headerText="Objetivo">
+                <h:outputText value="#{customer.goal}" />
+            </p:column>
+                
             </p:dataList>
         </p:dialog>
 
