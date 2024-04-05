@@ -15,10 +15,6 @@ import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
-import java.util.Map;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortMeta;
 
 /**
  * Created by rmpestano on 12/02/17.
@@ -26,91 +22,24 @@ import org.primefaces.model.SortMeta;
 @Named
 @ViewScoped
 public class CustomerListMB implements Serializable {
+    @Inject
+    private CarService carService;
 
     @Inject
-    CarService carService;
-
-    @Inject
-    CustomerDB customerDB;
-
-    Integer id;
-
-    LazyDataModel<CustomerData> cars;
-    Filter<CustomerData> filter = new Filter<>(new CustomerData());
-
-    List<CustomerData> selectedCars; //cars selected in checkbox column
-
-    //   List<CustomerData> cars = new ArrayList();
-    List<CustomerData> filteredValue;// datatable filteredValue attribute (column filters)
+    private CustomerDB customerDB;
+    
+    private Integer id;
+    //   LazyDataModel<CustomerData> cars;
+    private Filter<CustomerData> filter = new Filter<>(new CustomerData());
+    private List<CustomerData> selectedCars;
+    private CustomerData selectedCustomerData;
+    private List<CustomerData> cars = new ArrayList();
+    private List<CustomerData> filteredValue;
 
     @PostConstruct
     public void initDataModel() {
         System.out.println("[initDataModel] start");
-        System.out.println("entrou");
-        cars = new LazyDataModel<CustomerData>() {
-       
-            @Override
-            public CustomerData getRowData(String key) {
-                return customerDB.findById(Long.valueOf(key));
-            }
-
-            @Override
-            public String getRowKey(CustomerData car) {
-                return car.getId().toString();
-            }
-
-            @Override
-            public int count(Map<String, FilterMeta> map) {
-                return 1;
-            }
-
-            @Override
-            public List<CustomerData> load(int first, int pageSize, Map<String, SortMeta> sortMap, Map<String, FilterMeta> filterMap) {
-                // Aqui você precisa escrever a lógica para buscar os dados do seu banco de dados
-                // Exemplo simplificado de como você pode chamar um método do seu serviço para buscar os dados
-                List<CustomerData> dataList = customerDB.findAll();
-                return dataList;
-            }
-        };
-        /*{
-
-            @Override
-            public int count(Map<String, FilterMeta> map) {
-                return (int) carService.count(filter);
-            }
-
-            @Override
-            public List<Car> load(int first, int pageSize, Map<String, SortMeta> sortMap, Map<String, FilterMeta> filterMap) {
-                if (has(sortMap)) {
-                    sortMap.entrySet().stream()
-                            .findAny()
-                            .ifPresent(sortField -> {
-                                        filter.setSortField(sortField.getKey());
-                                    }
-                            );
-                }
-                filter.setFirst(first).setPageSize(pageSize);
-                if (has(filterMap)) {
-                    filter.setParams(filterMap.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                    );
-                }
-                return carService.paginate(filter);
-            }
-
-
-            @Override
-            public Car getRowData(String key) {
-                return carService.findById(Integer.valueOf(key));
-            }
-
-            @Override
-            public String getRowKey(Car car) {
-                return car.getId().toString();
-            }
-        };*/
-
-
+        cars = customerDB.findAll();
     }
 
     public void clear() {
@@ -156,20 +85,29 @@ public class CustomerListMB implements Serializable {
         this.selectedCars = selectedCars;
     }
 
-//    public List<CustomerData> getCars() {
-//        return cars;
-//    }
-//
-//    public void setCars(List<CustomerData> cars) {
-//        this.cars = cars;
-//    }
-    public LazyDataModel<CustomerData> getCars() {
+    public CustomerData getSelectedCustomerData() {
+        return selectedCustomerData;
+    }
+
+    public void setSelectedCustomerData(CustomerData selectedCustomerData) {
+        this.selectedCustomerData = selectedCustomerData;
+    }
+
+    public List<CustomerData> getCars() {
         return cars;
     }
 
-    public void setCars(LazyDataModel<CustomerData> cars) {
+    public void setCars(List<CustomerData> cars) {
         this.cars = cars;
     }
+
+    /*  public LazyDataModel<CustomerData> getCars() {
+        return cars; 
+    }
+
+    public void setCars(LazyDataModel<CustomerData> cars) {
+        this.cars = cars; 
+    }*/
 
     public Filter<CustomerData> getFilter() {
         return filter;
