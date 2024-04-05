@@ -4,7 +4,11 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:adm="http://github.com/adminfaces"
                 template="#{layoutMB.template}">
-
+    <h:head>
+        <h:outputStylesheet library="css" name="starter.css"/>
+    </h:head>
+        
+    
     <ui:define name="metadata">
         <ui:param name="title" value="Pacientes"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
 
@@ -85,25 +89,16 @@
             <p:dataList id="selectedCarsList" value="#{customerListMB.selectedCustomerData}" var="customer"
                         type="definition">
                 
-                <p:column headerText="Nome">
-                <h:outputText value="#{customer.name}" />
-            </p:column>
-
-            <p:column headerText="Idade">
-                <h:outputText value="#{customer.age}" />
-            </p:column>
-
-            <p:column headerText="Altura">
-                <h:outputText value="#{customer.height}" />
-            </p:column>
-
-            <p:column headerText="Peso">
-                <h:outputText value="#{customer.weight}" />
-            </p:column>
-                <p:column headerText="Objetivo">
-                <h:outputText value="#{customer.goal}" />
-            </p:column>
-                
+                <div id="profileContainer">
+                    <img src="resources/images/Perfil-Masculino.jpg" alt="Imagem de perfil:" class="profileImage"/>
+                    <div class="profileInfo">
+                        <p>Nome: #{customer.name}</p>
+                        <p>Idade: #{customer.age}</p>
+                        <p>Altura: #{customer.height}</p>
+                        <p>Peso: #{customer.weight}</p>
+                        <p>Objetivo: #{customer.goal}</p>
+                    </div>
+                </div>
             </p:dataList>
         </p:dialog>
 

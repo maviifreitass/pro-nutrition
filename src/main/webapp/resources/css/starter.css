@@ -35,3 +35,30 @@ a#logout {
         padding-top:100px;
     }
 }
+
+#profileContainer {
+    display: flex; /* Use flexbox para alinhar os elementos na horizontal */
+}
+
+.profileImage {
+    width: 100px; /* Largura da imagem */
+    height: auto; /* Mantém a proporção original da imagem */
+    margin-right: 10px; /* Espaçamento à direita para separar os dados do cliente */
+}
+
+#profileImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999; /* Certifique-se de que a imagem esteja na parte superior do layout */
+}
+.profileinfo p{
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+
+
+
+
+
