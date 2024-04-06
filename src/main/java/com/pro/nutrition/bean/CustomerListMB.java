@@ -57,12 +57,9 @@ public class CustomerListMB implements Serializable {
     }
 
     public void delete() {
-        int numCars = 0;
-        for (CustomerData selectedCar : selectedCars) {
-            numCars++;
-        }
-        selectedCars.clear();
-        addDetailMessage(numCars + " cars deleted successfully!");
+        customerDB.remove(selectedCustomerData); 
+        cars.remove(selectedCustomerData);
+        addDetailMessage("Paciente removido");
     }
 
     public void selectCar(CustomerData car) {
@@ -124,4 +121,6 @@ public class CustomerListMB implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    
 }

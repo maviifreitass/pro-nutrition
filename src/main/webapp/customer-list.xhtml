@@ -7,8 +7,8 @@
     <h:head>
         <h:outputStylesheet library="css" name="starter.css"/>
     </h:head>
-        
-    
+
+
     <ui:define name="metadata">
         <ui:param name="title" value="Pacientes"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
 
@@ -34,8 +34,14 @@
                         <p:spacer width="5"/>
                         <p:commandButton value="Visualizar" update="@(.ui-dialog)" styleClass="btn-info"
                                          oncomplete="PF('selectedCustomer').show()" icon="fa fa-search"/>
-                        <p:commandButton value="Deletar" update="@(.ui-dialog)" styleClass="btn-danger"
-                                         oncomplete="PF('deleteCustomer').show()" icon="fa fa-trash"/>
+                        <p:commandButton value="Deletar" action="#{customerListMB.delete}" update="carsTable" styleClass="btn-danger" icon="fa fa-trash">
+                            <p:confirm header="Confirmation" message="Deseja excluir este paciente?" icon="pi pi-info-circle"/>
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" process="carsTable" update="carsTable"/>
+                        </p:confirmDialog>
                     </div>
 
                     <p:splitButton value="New" action="/customer-form?faces-redirect=true"
@@ -55,7 +61,7 @@
                     </p:splitButton>
 
                     <p:separator/>
-                    <p:dataTable widgetVar="carsTable" var="c" value="#{customerListMB.cars}"
+                    <p:dataTable id="carsTable" widgetVar="carsTable" var="c" value="#{customerListMB.cars}"
                                  rowKey="#{c.id}" selectionMode="single"
                                  selection="#{customerListMB.selectedCustomerData}" 
                                  >
@@ -90,7 +96,7 @@
                   width="400" responsive="true" styleClass="box-success">
             <p:dataList id="selectedCarsList" value="#{customerListMB.selectedCustomerData}" var="customer"
                         type="definition">
-                
+
                 <div id="profileContainer">
                     <img src="resources/images/Perfil-Masculino.jpg" alt="Imagem de perfil:" class="profileImage"/>
                     <div class="profileInfo">
@@ -103,12 +109,6 @@
                 </div>
             </p:dataList>
         </p:dialog>
-        <p:dialog header="Você tem certeza?" widgetVar="deleteCustomer" responsive="true" styleClass="box-danger box-solid">
-                <p:commandButton value="Sim" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
-                                 icon="fa fa-check" action="#{customerFormMB.remove(customer)}" oncomplete="PF('deleteCustomer').hide()" />
-                <p:commandButton value="Não" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
-                                 icon="fa fa-close" onclick="PF('deleteCustomer').hide()" />
-                 </p:dialog>
 
     </ui:define>
 

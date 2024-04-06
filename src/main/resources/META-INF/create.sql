@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS customer_data (
   diet_plan_id INT,
   create_time TIMESTAMP,
   update_time TIMESTAMP,
+  delete_time TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (diet_plan_id) REFERENCES diet_plan (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );

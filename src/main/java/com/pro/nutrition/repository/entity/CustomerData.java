@@ -61,6 +61,10 @@ public class CustomerData implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
+    @Column(name = "delete_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deleteTime;
+
     @Column(name = "name")
     private String name;
 
@@ -153,6 +157,14 @@ public class CustomerData implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
     }
 
     @Override

@@ -5,6 +5,7 @@
 package com.pro.nutrition.repository.entity.db;
 
 import com.pro.nutrition.repository.entity.CustomerData;
+import com.pro.nutrition.repository.entity.CustomerData_;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -13,8 +14,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,11 +48,16 @@ public class CustomerDB implements Serializable {
     }
 
     public List<CustomerData> findAll() {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<CustomerData> criteriaQuery = criteriaBuilder.createQuery(CustomerData.class);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<CustomerData> criteriaQuery = cb.createQuery(CustomerData.class);
         Root<CustomerData> root = criteriaQuery.from(CustomerData.class);
         criteriaQuery.select(root);
 
+        Predicate p = cb.conjunction();
+        p = cb.and(p, cb.isNull(root.get(CustomerData_.deleteTime)));
+
+        criteriaQuery.where(p);
+        
         return em.createQuery(criteriaQuery).getResultList();
     }
 
@@ -58,6 +66,22 @@ public class CustomerDB implements Serializable {
 
         try {
             transaction.begin();
+            em.merge(customer); // Salva ou atualiza a entidade
+            transaction.commit(); // Confirma a transação
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Rollback se ocorrer um erro
+            }
+            e.printStackTrace(); // Trate o erro de alguma forma adequada
+        }
+    }
+    
+    public void remove(CustomerData customer) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            customer.setDeleteTime(new Date()); 
             em.merge(customer); // Salva ou atualiza a entidade
             transaction.commit(); // Confirma a transação
         } catch (Exception e) {
