@@ -1,6 +1,6 @@
 package com.pro.nutrition.bean;
 
-import com.github.adminfaces.template.exception.BusinessException;
+import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import org.omnifaces.cdi.ViewScoped;
 
 import jakarta.annotation.PostConstruct;
@@ -9,10 +9,9 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-import com.github.adminfaces.starter.service.CarService;
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import com.pro.nutrition.repository.entity.Aliment;
 import com.pro.nutrition.repository.entity.CustomerData;
+import com.pro.nutrition.repository.entity.dao.DietDataDAO;
 import com.pro.nutrition.repository.entity.db.AlimentDB;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
@@ -25,9 +24,6 @@ import java.util.ArrayList;
 public class DietPlanMB implements Serializable {
 
     @Inject
-    private CarService carService;
-
-    @Inject
     private CustomerDB customerDB;
 
     @Inject
@@ -38,9 +34,10 @@ public class DietPlanMB implements Serializable {
     private List<CustomerData> selectedCars;
 
     private List<CustomerData> customers = new ArrayList();
-    private CustomerData selectedCustomerData;
     private List<Aliment> aliments = new ArrayList();
     private List<Aliment> selectedAliments;
+
+    private DietDataDAO dietDAO = new DietDataDAO();
 
     @PostConstruct
     public void initDataModel() {
@@ -49,25 +46,12 @@ public class DietPlanMB implements Serializable {
         aliments = alimentDB.findAll();
     }
 
-    public List<String> completeModel(String query) {
-        return carService.getModels(query);
+    public void save() {
+        System.out.println("oiiiiiiiiiii");
+        System.out.println("DIETDATADAO >>>>>"+dietDAO);
+        addDetailMessage("Salvo!");
     }
-
-    public void findCarById(Integer id) {
-        if (id == null) {
-            throw new BusinessException("Provide Car ID to load");
-        }
-    }
-
-    public void delete() {
-        int numCars = 0;
-        for (CustomerData selectedCar : selectedCars) {
-            numCars++;
-        }
-        selectedCars.clear();
-        addDetailMessage(numCars + " cars deleted successfully!");
-    }
-
+    
     public void selectCar(CustomerData car) {
         this.selectedCars.add(car);
     }
@@ -78,14 +62,6 @@ public class DietPlanMB implements Serializable {
 
     public void setSelectedCars(List<CustomerData> selectedCars) {
         this.selectedCars = selectedCars;
-    }
-
-    public CustomerData getSelectedCustomerData() {
-        return selectedCustomerData;
-    }
-
-    public void setSelectedCustomerData(CustomerData selectedCustomerData) {
-        this.selectedCustomerData = selectedCustomerData;
     }
 
     public List<CustomerData> getCustomers() {
@@ -119,4 +95,13 @@ public class DietPlanMB implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public DietDataDAO getDietDAO() {
+        return dietDAO;
+    }
+
+    public void setDietDAO(DietDataDAO dietDAO) {
+        this.dietDAO = dietDAO;
+    }
+
 }

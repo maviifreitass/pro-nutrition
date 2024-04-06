@@ -6,22 +6,23 @@
 
     <p:tabView>
         <p:tab title="Café da manhã">
+
             <h:panelGrid>
                 <div class="ui-g ui-fluid">
                     <div>
                         <p:outputLabel value="Descrição" for="inptDescriptionBreakfast"/>
-                        <p:inputText id="inptDescriptionBreakfast" value=" " style="width: 500px;"/> 
+                        <p:inputText id="inptDescriptionBreakfast" value="#{dietPlanMB.dietDAO.mealDescription}" style="width: 500px;"/> 
                     </div>
                     <p:spacer width="5"/>
                     <div>
                         <p:outputLabel for="alimentsBreakfast" value="Alimento:" />
-                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.selectedAliments}" 
+                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.dietDAO.aliments}"  
                                           var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
                             <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
                                            itemLabel="#{aliment.name}" itemValue="#{aliment}" />
 
                             <p:column style="padding: 10px; width: 10px;">
-                                <p:inputText size="3" style="width: 75px;" onclick="stopPropagation(event);" />
+                                <p:inputText value="" style="width: 75px;" onclick="stopPropagation(event);" />
                             </p:column>
 
                             <p:column>
