@@ -6,7 +6,6 @@ package com.pro.nutrition.repository.entity.db;
 
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.CustomerData_;
-//import com.pro.nutrition.repository.entity_.CustomerData_;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -22,8 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
- * @author maria
+ * Classe que fornece métodos para manipulação de dados relacionados aos clientes.
+ * Esta classe é responsável por realizar operações de persistência e recuperação de dados relacionados aos clientes.
  */
 @Named
 @ApplicationScoped
@@ -41,13 +40,25 @@ public class CustomerDB implements Serializable {
     @Inject
     private DietPlanDB dietPlanDB;
 
+    /**
+     * Construtor padrão da classe CustomerDB.
+     */
     public CustomerDB() {
     }
 
+    /**
+     * Busca um cliente pelo seu ID.
+     * @param id O ID do cliente a ser buscado.
+     * @return O cliente encontrado ou null se não encontrado.
+     */
     public CustomerData findById(Long id) {
         return em.find(CustomerData.class, id);
     }
 
+    /**
+     * Recupera todos os clientes.
+     * @return Uma lista de todos os clientes armazenados.
+     */
     public List<CustomerData> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<CustomerData> criteriaQuery = cb.createQuery(CustomerData.class);
@@ -62,6 +73,10 @@ public class CustomerDB implements Serializable {
         return em.createQuery(criteriaQuery).getResultList();
     }
 
+    /**
+     * Salva um cliente no banco de dados.
+     * @param customer O cliente a ser salvo.
+     */
     public void save(CustomerData customer) {
         EntityTransaction transaction = em.getTransaction();
 
@@ -77,6 +92,10 @@ public class CustomerDB implements Serializable {
         }
     }
     
+    /**
+     * Remove um cliente do banco de dados (lógica de exclusão).
+     * @param customer O cliente a ser removido.
+     */
     public void remove(CustomerData customer) {
         EntityTransaction transaction = em.getTransaction();
 

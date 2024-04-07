@@ -17,7 +17,8 @@ import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
 
 /**
- * Created by rmpestano on 12/02/17.
+ * Classe que controla o plano de dieta.
+ * Esta classe gerencia as operações relacionadas à criação e manipulação do plano de dieta para os clientes.
  */
 @Named
 @ViewScoped
@@ -39,6 +40,10 @@ public class DietPlanMB implements Serializable {
 
     private DietDataDAO dietDAO = new DietDataDAO();
 
+    /**
+     * Inicializa o modelo de dados do plano de dieta.
+     * Este método é chamado após a construção da instância da classe.
+     */
     @PostConstruct
     public void initDataModel() {
         System.out.println("[initDataModel] start");
@@ -48,13 +53,21 @@ public class DietPlanMB implements Serializable {
         aliments = alimentDB.findAll();
     }
 
+    /**
+     * Salva o plano de dieta.
+     * Este método imprime os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
+     */
     public void save() {
         System.out.println(selectedAliments);
         System.out.println(dietDAO.getDietName());
         System.out.println(dietDAO.getMealDescription());
         addDetailMessage("Salvo!");
     }
-
+    
+    /**
+     * Seleciona um cliente para o plano de dieta.
+     * @param car O cliente selecionado.
+     */
     public void selectCar(CustomerData car) {
         this.selectedCars.add(car);
     }

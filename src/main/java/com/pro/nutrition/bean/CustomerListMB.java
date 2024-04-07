@@ -16,7 +16,8 @@ import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
 
 /**
- * Created by maria.
+ * Classe que controla a listagem de clientes.
+ * Esta classe gerencia as operações relacionadas à exibição e manipulação da lista de clientes.
  */
 @Named
 @ViewScoped
@@ -31,16 +32,27 @@ public class CustomerListMB implements Serializable {
     private List<CustomerData> customers = new ArrayList();
     private List<CustomerData> filteredValue;
 
+    /**
+     * Inicializa o modelo de dados da lista de clientes.
+     * Este método é chamado após a construção da instância da classe.
+     */
     @PostConstruct
     public void initDataModel() {
         System.out.println("[initDataModel] start");
         customers = customerDB.findAll();
     }
-
+    
+    /**
+     * Limpa o filtro aplicado à lista de clientes.
+     */
     public void clear() {
         filter = new Filter<>(new CustomerData());
     }
 
+    /**
+     * Remove um cliente da lista.
+     * Além de remover o cliente, uma mensagem de sucesso é adicionada.
+     */
     public void delete() {
         customerDB.remove(selectedCustomerData);
         customers.remove(selectedCustomerData);

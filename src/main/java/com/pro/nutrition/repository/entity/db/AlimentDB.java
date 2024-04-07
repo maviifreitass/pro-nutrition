@@ -17,8 +17,8 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 
 /**
- *
- * @author maria
+ * Classe que fornece métodos para manipulação de dados relacionados aos alimentos.
+ * Esta classe é responsável por realizar operações de persistência e recuperação de dados relacionados aos alimentos.
  */
 @Named
 @ApplicationScoped
@@ -30,10 +30,19 @@ public class AlimentDB {
     @Inject
     private EntityManager em;
 
+    /**
+     * Busca um alimento pelo seu ID.
+     * @param id O ID do alimento a ser buscado.
+     * @return O alimento encontrado ou null se não encontrado.
+     */
     public Aliment findById(Long id) {
         return em.find(Aliment.class, id);
     }
 
+    /**
+     * Recupera todos os alimentos.
+     * @return Uma lista de todos os alimentos armazenados.
+     */
     public List<Aliment> findAll() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Aliment> criteriaQuery = criteriaBuilder.createQuery(Aliment.class);
@@ -43,6 +52,10 @@ public class AlimentDB {
         return em.createQuery(criteriaQuery).getResultList();
     }
 
+    /**
+     * Salva um alimento no banco de dados.
+     * @param customer O alimento a ser salvo.
+     */
     public void save(Aliment customer) {
         EntityTransaction transaction = em.getTransaction();
 
