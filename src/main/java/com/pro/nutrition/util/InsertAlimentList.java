@@ -20,9 +20,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
+
 /**
- *
- * @author maria
+ * Classe responsável por inserir listas de alimentos no banco de dados a partir da API de nutrição.
+ * Ela obtém informações de nutrição de uma lista de alimentos e as insere em um banco de dados PostgreSQL.
  */
 public class InsertAlimentList {
 
@@ -97,7 +98,7 @@ public class InsertAlimentList {
         aliments.add("Lychee");
         aliments.add("Arugula");
 
-        String sql
+         String sql
                 = "INSERT INTO aliment "
                 + "(id, name, calories, fat_total, fat_saturated, protein, sodium, potassium, "
                 + "cholesterol, carbohydrates, fiber, sugar) "

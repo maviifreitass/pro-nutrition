@@ -24,8 +24,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
- * @author maria
+ * Classe de repositório do banco de dados que irá estabelecer o cadastro de
+ * dietas
  */
 @Named
 @ApplicationScoped
@@ -40,10 +40,21 @@ public class DietPlanDB {
     private DietPlan dietPlan;
     private Meals meals;
 
+    /**
+     * Busca um plano de dieta pelo ID.
+     *
+     * @param id O ID do plano de dieta a ser buscado.
+     * @return O plano de dieta encontrado, ou null se não encontrado.
+     */
     public DietPlan findById(Long id) {
         return em.find(DietPlan.class, id);
     }
 
+    /**
+     * Retorna uma lista de todos os planos de dieta.
+     *
+     * @return Uma lista contendo todos os planos de dieta.
+     */
     public List<DietPlan> findAll() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<DietPlan> criteriaQuery = criteriaBuilder.createQuery(DietPlan.class);
@@ -53,20 +64,30 @@ public class DietPlanDB {
         return em.createQuery(criteriaQuery).getResultList();
     }
 
-    public void save(DietPlan customer) {
+    /**
+     * Salva ou atualiza um plano de dieta.
+     *
+     * @param dietPlan O plano de dieta a ser salvo.
+     */
+    public void save(DietPlan dietPlan) {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.merge(customer); 
-            transaction.commit(); 
+            em.merge(dietPlan);
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Cria um novo plano de dieta junto com as informações associadas.
+     *
+     * @param item Os dados necessários para criar o plano de dieta.
+     */
     public void create(DietDataDAO item) {
         dietPlan.setCreateTime(new Date());
         dietPlan.setUpdateTime(new Date());
@@ -87,11 +108,11 @@ public class DietPlanDB {
         em.persist(mealsPlan);
 
         for (Aliment food : item.getAliments()) {
-            MealsItems mealItem = new MealsItems(); 
+            MealsItems mealItem = new MealsItems();
             mealItem.setCreateTime(new Date());
             mealItem.setMeals(meals);
             mealItem.setAliment(food);
-            em.persist(mealItem); 
+            em.persist(mealItem);
         }
 
         CustomerData customerData = item.getCustomerData();

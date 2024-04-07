@@ -14,8 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author maria
+ * Esta classe é responsável por fornecer uma conexão com um banco de dados PostgreSQL.
+ * Ela utiliza o JDBC para estabelecer a conexão.
  */
 @Named
 @ApplicationScoped
@@ -23,6 +23,11 @@ public class PostgresWrapper {
 
     protected Connection connection;
 
+    /**
+     * Método para abrir uma conexão com o banco de dados PostgreSQL.
+     *
+     * @return true se a conexão for aberta com sucesso, false caso contrário.
+     */
     public Boolean openPostgresConnection() {
         try {
             String url = "jdbc:postgresql://localhost:5432/pro-nutrition";
@@ -37,10 +42,18 @@ public class PostgresWrapper {
         return true;
     }
 
+    /**
+     * Retorna a conexão com o banco de dados PostgreSQL.
+     *
+     * @return A conexão com o banco de dados.
+     */
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Método para fechar a conexão com o banco de dados PostgreSQL.
+     */
     public void closeConnection() {
         try {
             connection.close();
@@ -48,5 +61,4 @@ public class PostgresWrapper {
             Logger.getLogger(PostgresWrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

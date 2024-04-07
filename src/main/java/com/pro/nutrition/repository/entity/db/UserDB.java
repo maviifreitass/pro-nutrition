@@ -17,8 +17,8 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 
 /**
- *
- * @author maria
+ * Classe de repositório do banco de dados que irá realizar trazes os dados dos usuários
+ * ! Autenticação e autorização serão implementadas em outra classe !
  */
 @Named
 @ApplicationScoped
@@ -30,10 +30,21 @@ public class UserDB {
     @Inject
     private EntityManager em;
 
+    /**
+     * Busca um usuário pelo ID.
+     *
+     * @param id O ID do usuário a ser buscado.
+     * @return O usuário encontrado, ou null se não encontrado.
+     */
     public User findById(Long id) {
         return em.find(User.class, id);
     }
 
+    /**
+     * Retorna uma lista de todos os usuários.
+     *
+     * @return Uma lista contendo todos os usuários.
+     */
     public List<User> findAll() {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
@@ -43,18 +54,23 @@ public class UserDB {
         return em.createQuery(criteriaQuery).getResultList();
     }
 
-    public void save(User customer) {
+    /**
+     * Salva o usuário.
+     *
+     * @param user O usuário a ser salvo.
+     */
+    public void save(User user) {
         EntityTransaction transaction = em.getTransaction();
 
         try {
             transaction.begin();
-            em.merge(customer);
-            transaction.commit(); 
+            em.merge(user);
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
-                transaction.rollback(); 
+                transaction.rollback();
             }
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
 }
