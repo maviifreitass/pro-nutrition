@@ -75,12 +75,6 @@
             <version>2.7</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>3.0.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
     <build>
         <resources>

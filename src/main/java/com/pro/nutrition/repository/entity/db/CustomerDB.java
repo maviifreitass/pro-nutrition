@@ -6,6 +6,7 @@ package com.pro.nutrition.repository.entity.db;
 
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.CustomerData_;
+//import com.pro.nutrition.repository.entity_.CustomerData_;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
