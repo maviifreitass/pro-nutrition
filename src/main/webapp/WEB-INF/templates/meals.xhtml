@@ -6,7 +6,6 @@
 
     <p:tabView>
         <p:tab title="Café da manhã">
-
             <h:panelGrid>
                 <div class="ui-g ui-fluid">
                     <div>
@@ -16,14 +15,9 @@
                     <p:spacer width="5"/>
                     <div>
                         <p:outputLabel for="alimentsBreakfast" value="Alimento:" />
-                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.dietDAO.aliments}"  
+                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.selectedAliments}" 
                                           var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
-                            <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
-                                           itemLabel="#{aliment.name}" itemValue="#{aliment}" />
-
-                            <p:column style="padding: 10px; width: 10px;">
-                                <p:inputText value="" style="width: 75px;" onclick="stopPropagation(event);" />
-                            </p:column>
+                            <f:selectItems value="#{dietPlanMB.aliments}"/>
 
                             <p:column>
                                 <h:outputText value="#{aliment.name}" />
@@ -33,6 +27,10 @@
                     </div>
                 </div>
             </h:panelGrid>
+            <div>
+                <p:commandButton value="Salvar Café da Manhã" action="#{dietPlanMB.save}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
+                </p:commandButton>
+            </div>
         </p:tab>
         <p:tab title="Almoço">
             <h:panelGrid>
@@ -49,9 +47,6 @@
                             <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
                                            itemLabel="#{aliment.name}" itemValue="#{aliment}" />
 
-                            <p:column style="padding: 10px; width: 10px;">
-                                <p:inputText  size="3" style="width: 75px;" onclick="stopPropagation(event);" />
-                            </p:column>
 
                             <p:column>
                                 <h:outputText value="#{aliment.name}" />
@@ -61,6 +56,10 @@
                     </div>
                 </div>
             </h:panelGrid>
+            <div>
+                <p:commandButton value="Salvar Almoço" action="#{dietPlanMB.save}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
+                </p:commandButton>   
+            </div>
         </p:tab>
         <p:tab title="Janta">
             <h:panelGrid>
@@ -76,25 +75,15 @@
                                           var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
                             <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
                                            itemLabel="#{aliment.name}" itemValue="#{aliment}" />
-
-                            <p:column style="padding: 10px; width: 10px;">
-                                <p:inputText size="3" style="width: 75px;" onclick="stopPropagation(event);" />
-                            </p:column>
-
                             <p:column>
                                 <h:outputText value="#{aliment.name}" />
                             </p:column>
                         </p:selectManyMenu>
-
                     </div>
                 </div>
             </h:panelGrid>
+            <p:commandButton value="Salvar Jantar" action="#{dietPlanMB.save}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
+            </p:commandButton>
         </p:tab>
     </p:tabView>
-    <script>
-        function stopPropagation(event) {
-            event.stopPropagation();
-        }
-    </script>
-
 </ui:composition>

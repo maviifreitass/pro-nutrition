@@ -10,64 +10,41 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.github.adminfaces.starter.infra.model.Filter;
-import com.github.adminfaces.starter.service.CarService;
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
+import static com.pro.nutrition.util.Utils.addDetailMessage;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
 import java.util.ArrayList;
 
 /**
- * Created by rmpestano on 12/02/17.
+ * Created by maria.
  */
 @Named
 @ViewScoped
 public class CustomerListMB implements Serializable {
-    @Inject
-    private CarService carService;
 
     @Inject
     private CustomerDB customerDB;
-    
+
     private Integer id;
-    //   LazyDataModel<CustomerData> cars;
     private Filter<CustomerData> filter = new Filter<>(new CustomerData());
-    private List<CustomerData> selectedCars;
     private CustomerData selectedCustomerData;
-    private List<CustomerData> cars = new ArrayList();
+    private List<CustomerData> customers = new ArrayList();
     private List<CustomerData> filteredValue;
 
     @PostConstruct
     public void initDataModel() {
         System.out.println("[initDataModel] start");
-        cars = customerDB.findAll();
+        customers = customerDB.findAll();
     }
 
     public void clear() {
         filter = new Filter<>(new CustomerData());
     }
 
-    public List<String> completeModel(String query) {
-        return carService.getModels(query);
-    }
-
-    public void findCarById(Integer id) {
-        if (id == null) {
-            throw new BusinessException("Provide Car ID to load");
-        }
-    }
-
     public void delete() {
-        customerDB.remove(selectedCustomerData); 
-        cars.remove(selectedCustomerData);
+        customerDB.remove(selectedCustomerData);
+        customers.remove(selectedCustomerData);
         addDetailMessage("Paciente removido");
-    }
-
-    public void selectCar(CustomerData car) {
-        this.selectedCars.add(car);
-    }
-
-    public List<CustomerData> getSelectedCars() {
-        return selectedCars;
     }
 
     public List<CustomerData> getFilteredValue() {
@@ -76,10 +53,6 @@ public class CustomerListMB implements Serializable {
 
     public void setFilteredValue(List<CustomerData> filteredValue) {
         this.filteredValue = filteredValue;
-    }
-
-    public void setSelectedCars(List<CustomerData> selectedCars) {
-        this.selectedCars = selectedCars;
     }
 
     public CustomerData getSelectedCustomerData() {
@@ -91,20 +64,12 @@ public class CustomerListMB implements Serializable {
     }
 
     public List<CustomerData> getCars() {
-        return cars;
+        return customers;
     }
 
-    public void setCars(List<CustomerData> cars) {
-        this.cars = cars;
+    public void setCars(List<CustomerData> customers) {
+        this.customers = customers;
     }
-
-    /*  public LazyDataModel<CustomerData> getCars() {
-        return cars; 
-    }
-
-    public void setCars(LazyDataModel<CustomerData> cars) {
-        this.cars = cars; 
-    }*/
 
     public Filter<CustomerData> getFilter() {
         return filter;
@@ -121,6 +86,13 @@ public class CustomerListMB implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    
+
+    public List<CustomerData> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<CustomerData> customers) {
+        this.customers = customers;
+    }
+
 }

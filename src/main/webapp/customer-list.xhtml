@@ -34,34 +34,18 @@
                         <p:spacer width="5"/>
                         <p:commandButton value="Visualizar" update="@(.ui-dialog)" styleClass="btn-info"
                                          oncomplete="PF('selectedCustomer').show()" icon="fa fa-search"/>
-                        <p:commandButton value="Deletar" action="#{customerListMB.delete}" update="carsTable" styleClass="btn-danger" icon="fa fa-trash">
+                        <p:commandButton value="Deletar" action="#{customerListMB.delete}" update="customersTable" styleClass="btn-danger" icon="fa fa-trash">
                             <p:confirm header="Confirmation" message="Deseja excluir este paciente?" icon="pi pi-info-circle"/>
                         </p:commandButton>
 
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
                             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" process="carsTable" update="carsTable"/>
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" process="customersTable" update="customersTable"/>
                         </p:confirmDialog>
                     </div>
 
-                    <p:splitButton value="New" action="/customer-form?faces-redirect=true"
-                                   icon="fa fa-plus"
-                                   styleClass="hidden-md hidden-lg btn-primary">
-                        <p:menuitem value="Delete Selected" action="#{customerListMB.delete}"
-                                    process="@this" update="@form"
-                                    disabled="#{empty customerListMB.selectedCars or customerListMB.selectedCars.size() == 0}"
-                                    icon="fa fa-trash">
-                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
-                        </p:menuitem>
-                        <p:menuitem value="View selected" update="@(.ui-dialog)"
-                                    oncomplete="PF('selectedCars').show()"
-                                    disabled="#{empty customerListMB.selectedCars or customerListMB.selectedCars.size() == 0}"
-                                    icon="fa fa-search"
-                                    />
-                    </p:splitButton>
-
                     <p:separator/>
-                    <p:dataTable id="carsTable" widgetVar="carsTable" var="c" value="#{customerListMB.cars}"
+                    <p:dataTable id="customersTable" widgetVar="customersTable" var="c" value="#{customerListMB.customers}"
                                  rowKey="#{c.id}" selectionMode="single"
                                  selection="#{customerListMB.selectedCustomerData}" 
                                  >
@@ -94,7 +78,7 @@
 
         <p:dialog header="Informações do Cliente" widgetVar="selectedCustomer" height="200"
                   width="400" responsive="true" styleClass="box-success">
-            <p:dataList id="selectedCarsList" value="#{customerListMB.selectedCustomerData}" var="customer"
+            <p:dataList id="selectedCustomersList" value="#{customerListMB.selectedCustomerData}" var="customer"
                         type="definition">
 
                 <div id="profileContainer">

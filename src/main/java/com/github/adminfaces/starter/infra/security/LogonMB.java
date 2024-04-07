@@ -9,7 +9,7 @@ import jakarta.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
+import static com.pro.nutrition.util.Utils.addDetailMessage;
 import com.github.adminfaces.template.config.AdminConfig;
 import com.pro.nutrition.repository.entity.User;
 import com.pro.nutrition.repository.entity.db.UserDB;
@@ -43,12 +43,6 @@ public class LogonMB extends AdminSession implements Serializable {
 
 
     public void login() throws IOException {
-   /*     User user = new User();
-        user.setEmail(email); 
-        user.setPassword("HASH12345"); 
-        user.setUsername("MeuTeste"); 
-        userDB.create(user);   */      
-        
         currentUser = email;
         Faces.getExternalContext().getFlash().setKeepMessages(true);
         Faces.redirect(adminConfig.getIndexPage());

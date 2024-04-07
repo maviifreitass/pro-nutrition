@@ -66,13 +66,13 @@ public class CustomerDB implements Serializable {
 
         try {
             transaction.begin();
-            em.merge(customer); // Salva ou atualiza a entidade
-            transaction.commit(); // Confirma a transação
+            em.merge(customer); 
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
-                transaction.rollback(); // Rollback se ocorrer um erro
+                transaction.rollback(); 
             }
-            e.printStackTrace(); // Trate o erro de alguma forma adequada
+            e.printStackTrace(); 
         }
     }
     
@@ -82,13 +82,13 @@ public class CustomerDB implements Serializable {
         try {
             transaction.begin();
             customer.setDeleteTime(new Date()); 
-            em.merge(customer); // Salva ou atualiza a entidade
-            transaction.commit(); // Confirma a transação
+            em.merge(customer); 
+            transaction.commit(); 
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
-                transaction.rollback(); // Rollback se ocorrer um erro
+                transaction.rollback();
             }
-            e.printStackTrace(); // Trate o erro de alguma forma adequada
+            e.printStackTrace(); 
         }
     }
 }

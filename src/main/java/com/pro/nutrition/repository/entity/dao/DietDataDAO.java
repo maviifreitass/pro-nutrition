@@ -4,6 +4,7 @@
  */
 package com.pro.nutrition.repository.entity.dao;
 
+import com.pro.nutrition.repository.entity.Aliment;
 import com.pro.nutrition.repository.entity.CustomerData;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class DietDataDAO implements Serializable{
     private String dietName;
     private String mealName;
     private String mealDescription;
-    private List<FoodItemDAO> aliments = new ArrayList();
+    private List<Aliment> aliments = new ArrayList();
 
     public CustomerData getCustomerData() {
         return customerData;
@@ -53,11 +54,11 @@ public class DietDataDAO implements Serializable{
         this.mealDescription = mealDescription;
     }
 
-    public List<FoodItemDAO> getAliments() {
+    public List<Aliment> getAliments() {
         return aliments;
     }
 
-    public void setAliments(List<FoodItemDAO> aliments) {
+    public void setAliments(List<Aliment> aliments) {
         this.aliments = aliments;
     }
 

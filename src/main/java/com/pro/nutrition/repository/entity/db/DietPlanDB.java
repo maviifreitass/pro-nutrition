@@ -4,13 +4,13 @@
  */
 package com.pro.nutrition.repository.entity.db;
 
+import com.pro.nutrition.repository.entity.Aliment;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.DietPlan;
 import com.pro.nutrition.repository.entity.Meals;
 import com.pro.nutrition.repository.entity.MealsItems;
 import com.pro.nutrition.repository.entity.MealsPlan;
 import com.pro.nutrition.repository.entity.dao.DietDataDAO;
-import com.pro.nutrition.repository.entity.dao.FoodItemDAO;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -57,13 +57,13 @@ public class DietPlanDB {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.merge(customer); // Salva ou atualiza a entidade
-            transaction.commit(); // Confirma a transação
+            em.merge(customer); 
+            transaction.commit(); 
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
-                transaction.rollback(); // Rollback se ocorrer um erro
+                transaction.rollback();
             }
-            e.printStackTrace(); // Trate o erro de alguma forma adequada
+            e.printStackTrace(); 
         }
     }
 
@@ -86,13 +86,12 @@ public class DietPlanDB {
 
         em.persist(mealsPlan);
 
-        for (FoodItemDAO food : item.getAliments()) {
-            MealsItems mealItem = new MealsItems(); // Crie um novo objeto mealItem para cada item de alimento
+        for (Aliment food : item.getAliments()) {
+            MealsItems mealItem = new MealsItems(); 
             mealItem.setCreateTime(new Date());
             mealItem.setMeals(meals);
-            mealItem.setQuantity(Double.valueOf(food.getQuantity()));
-            mealItem.setAliment(food.getAliment());
-            em.persist(mealItem); // Persista o novo objeto mealItem
+            mealItem.setAliment(food);
+            em.persist(mealItem); 
         }
 
         CustomerData customerData = item.getCustomerData();

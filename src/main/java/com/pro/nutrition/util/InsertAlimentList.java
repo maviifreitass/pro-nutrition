@@ -2,22 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.github.adminfaces.starter.util;
+package com.pro.nutrition.util;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pro.nutrition.repository.util.PostgresWrapper;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
-
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 /**
  *
  * @author maria
@@ -26,7 +28,7 @@ public class InsertAlimentList {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
         List<String> aliments = new ArrayList();
-        /* aliments.add("Apple");
+        aliments.add("Apple");
         aliments.add("Banana");
         aliments.add("Orange");
         aliments.add("Strawberry");
@@ -93,9 +95,9 @@ public class InsertAlimentList {
         aliments.add("Elderberry");
         aliments.add("Papaya");
         aliments.add("Lychee");
-        aliments.add("Arugula");*/
+        aliments.add("Arugula");
 
- /*  String sql
+        String sql
                 = "INSERT INTO aliment "
                 + "(id, name, calories, fat_total, fat_saturated, protein, sodium, potassium, "
                 + "cholesterol, carbohydrates, fiber, sugar) "
@@ -148,28 +150,6 @@ public class InsertAlimentList {
                 e.printStackTrace();
             }
             j++;
-        }*/
-        PostgresWrapper pw = new PostgresWrapper();
-        pw.openPostgresConnection();
-        List<String> ids = new ArrayList();
-        try ( Connection connection = pw.getConnection()) {
-            LocalDateTime currentDateTime = LocalDateTime.now();
-
-            String sql
-                    = "SELECT * FROM CUSTOMER_dATA";
-
-            try (final Statement pwStatement = connection.createStatement()) {
-                ResultSet result = pwStatement.executeQuery(sql);
-                while (result.next()) {
-                    
-                }
-
-            } finally {
-                pw.closeConnection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        System.out.println(ids.get(0));
     }
 }

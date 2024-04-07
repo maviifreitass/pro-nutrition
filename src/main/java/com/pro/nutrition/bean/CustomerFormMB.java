@@ -4,22 +4,19 @@
  */
 package com.pro.nutrition.bean;
 
-import com.github.adminfaces.starter.model.Car;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
-import org.omnifaces.util.Faces;
 import jakarta.annotation.ManagedBean;
 
 import java.io.Serializable;
 
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
-import static com.github.adminfaces.template.util.Assert.has;
+import static com.pro.nutrition.util.Utils.addDetailMessage;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
 
 /**
- * @author rmpestano
+ * @author maria
  */
 @Named
 @ViewScoped
@@ -27,8 +24,6 @@ import com.pro.nutrition.repository.entity.db.CustomerDB;
 public class CustomerFormMB implements Serializable {
 
     private Integer id;
-    private Car car;
-
     private CustomerData customer;
 
     @Inject
@@ -46,37 +41,9 @@ public class CustomerFormMB implements Serializable {
         this.id = id;
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public void remove() {
-        if (has(car) && has(car.getId())) {
-            addDetailMessage("Car " + car.getModel()
-                    + " removed successfully");
-            Faces.getFlash().setKeepMessages(true);
-            Faces.redirect("customer-list.jsf");
-        }
-    }
-
     public void save() {
-        System.out.println("ENTREI");
-        /*
-        customerDB.save(customer); */
+        customerDB.save(customer); 
         addDetailMessage("Salvo!");
-    }
-
-    public void clear() {
-        car = new Car();
-        id = null;
-    }
-
-    public boolean isNew() {
-        return car == null || car.getId() == null;
     }
 
     public CustomerData getCustomer() {

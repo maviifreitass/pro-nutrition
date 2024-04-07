@@ -1,6 +1,6 @@
 package com.pro.nutrition.bean;
 
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
+import static com.pro.nutrition.util.Utils.addDetailMessage;
 import org.omnifaces.cdi.ViewScoped;
 
 import jakarta.annotation.PostConstruct;
@@ -32,9 +32,9 @@ public class DietPlanMB implements Serializable {
     private Integer id;
     //   LazyDataModel<CustomerData> cars;
     private List<CustomerData> selectedCars;
-
+    private CustomerData selectedCustomerData;
     private List<CustomerData> customers = new ArrayList();
-    private List<Aliment> aliments = new ArrayList();
+    private List<Aliment> aliments;
     private List<Aliment> selectedAliments;
 
     private DietDataDAO dietDAO = new DietDataDAO();
@@ -42,16 +42,19 @@ public class DietPlanMB implements Serializable {
     @PostConstruct
     public void initDataModel() {
         System.out.println("[initDataModel] start");
+        selectedAliments = new ArrayList();
+        aliments = new ArrayList();
         customers = customerDB.findAll();
         aliments = alimentDB.findAll();
     }
 
     public void save() {
-        System.out.println("oiiiiiiiiiii");
-        System.out.println("DIETDATADAO >>>>>"+dietDAO);
+        System.out.println(selectedAliments);
+        System.out.println(dietDAO.getDietName());
+        System.out.println(dietDAO.getMealDescription());
         addDetailMessage("Salvo!");
     }
-    
+
     public void selectCar(CustomerData car) {
         this.selectedCars.add(car);
     }
@@ -102,6 +105,14 @@ public class DietPlanMB implements Serializable {
 
     public void setDietDAO(DietDataDAO dietDAO) {
         this.dietDAO = dietDAO;
+    }
+
+    public CustomerData getSelectedCustomerData() {
+        return selectedCustomerData;
+    }
+
+    public void setSelectedCustomerData(CustomerData selectedCustomerData) {
+        this.selectedCustomerData = selectedCustomerData;
     }
 
 }

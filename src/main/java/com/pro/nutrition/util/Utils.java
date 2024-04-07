@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.util;
+package com.pro.nutrition.util;
 
 import com.github.adminfaces.starter.model.Car;
 import org.omnifaces.util.Messages;
