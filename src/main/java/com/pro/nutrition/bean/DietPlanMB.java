@@ -1,7 +1,6 @@
 package com.pro.nutrition.bean;
 
 import static com.pro.nutrition.util.Utils.addDetailMessage;
-import org.omnifaces.cdi.ViewScoped;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
@@ -14,7 +13,13 @@ import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.dao.DietDataDAO;
 import com.pro.nutrition.repository.entity.db.AlimentDB;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
+import jakarta.faces.view.ViewScoped;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Classe que controla o plano de dieta.
@@ -23,6 +28,8 @@ import java.util.ArrayList;
 @Named
 @ViewScoped
 public class DietPlanMB implements Serializable {
+    
+    private static final Logger logger = Logger.getLogger(DietPlanMB.class.getName());
 
     @Inject
     private CustomerDB customerDB;
@@ -31,12 +38,12 @@ public class DietPlanMB implements Serializable {
     private AlimentDB alimentDB;
 
     private Integer id;
-    //   LazyDataModel<CustomerData> cars;
     private List<CustomerData> selectedCars;
     private CustomerData selectedCustomerData;
     private List<CustomerData> customers = new ArrayList();
     private List<Aliment> aliments;
     private List<Aliment> selectedAliments;
+    private Set<Aliment> selectedAlimentsDB = new HashSet<>();
 
     private DietDataDAO dietDAO = new DietDataDAO();
 
@@ -46,11 +53,15 @@ public class DietPlanMB implements Serializable {
      */
     @PostConstruct
     public void initDataModel() {
-        System.out.println("[initDataModel] start");
-        selectedAliments = new ArrayList();
+        logger.log(Level.INFO, "[initDataModel] Start");
         aliments = new ArrayList();
         customers = customerDB.findAll();
         aliments = alimentDB.findAll();
+    }
+    
+    public void onAlimentSelection() {
+        selectedAlimentsDB.addAll(selectedAliments);
+        selectedAlimentsDB.retainAll(selectedAliments);
     }
 
     /**
@@ -58,9 +69,10 @@ public class DietPlanMB implements Serializable {
      * Este método imprime os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
      */
     public void save() {
-        System.out.println(selectedAliments);
-        System.out.println(dietDAO.getDietName());
-        System.out.println(dietDAO.getMealDescription());
+        logger.log(Level.INFO, "[Save] selectedCustomerData {0}", selectedCustomerData);
+        logger.log(Level.INFO, "[Save] dietName {0}",dietDAO.getDietName());
+        logger.log(Level.INFO, "[Save] mealDescription {0}",dietDAO.getMealDescription());
+        logger.log(Level.INFO, "[Save] !!selectedAlimentsDB {0}",selectedAlimentsDB);
         addDetailMessage("Salvo!");
     }
     

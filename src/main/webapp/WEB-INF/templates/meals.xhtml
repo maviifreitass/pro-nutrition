@@ -15,13 +15,13 @@
                     <p:spacer width="5"/>
                     <div>
                         <p:outputLabel for="alimentsBreakfast" value="Alimento:" />
-                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.selectedAliments}" 
-                                          var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
-                            <f:selectItems value="#{dietPlanMB.aliments}"/>
-
+                        <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.selectedAliments}" var="aliment" filter="true" filterMatchMode="contains" 
+                                          showCheckbox="true" style="width: 800px;">
+                            <f:selectItems value="#{dietPlanMB.aliments}" itemLabel="#{aliment.name}" itemValue="#{aliment}"/>
                             <p:column>
                                 <h:outputText value="#{aliment.name}" />
                             </p:column>
+                            <p:ajax listener="#{dietPlanMB.onAlimentSelection}" global="false"/>
                         </p:selectManyMenu>
 
                     </div>
@@ -51,6 +51,7 @@
                             <p:column>
                                 <h:outputText value="#{aliment.name}" />
                             </p:column>
+                            <p:ajax listener="#{dietPlanMB.onAlimentSelection}" global="false"/>
                         </p:selectManyMenu>
 
                     </div>
@@ -78,6 +79,7 @@
                             <p:column>
                                 <h:outputText value="#{aliment.name}" />
                             </p:column>
+                            <p:ajax listener="#{dietPlanMB.onAlimentSelection}" global="false"/>
                         </p:selectManyMenu>
                     </div>
                 </div>
