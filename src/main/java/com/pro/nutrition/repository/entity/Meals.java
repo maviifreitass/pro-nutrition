@@ -38,9 +38,9 @@ public class Meals implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
-    @Column(name = "update_time")
+    @Column(name = "delete_time")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
+    private Date deleteTime;
 
     public Long getId() {
         return id;
@@ -74,12 +74,12 @@ public class Meals implements Serializable {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getDeleteTime() {
+        return deleteTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
     }
 
 }

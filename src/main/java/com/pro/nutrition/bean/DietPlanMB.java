@@ -13,6 +13,7 @@ import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.dao.DietDataDAO;
 import com.pro.nutrition.repository.entity.db.AlimentDB;
 import com.pro.nutrition.repository.entity.db.CustomerDB;
+import com.pro.nutrition.repository.entity.db.DietPlanDB;
 import jakarta.faces.view.ViewScoped;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,6 +37,9 @@ public class DietPlanMB implements Serializable {
 
     @Inject
     private AlimentDB alimentDB;
+
+    @Inject
+    private DietPlanDB dietDB;
 
     private Integer id;
     private List<CustomerData> selectedCars;
@@ -69,10 +73,16 @@ public class DietPlanMB implements Serializable {
      * Este método imprime os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
      */
     public void save() {
-        logger.log(Level.INFO, "[Save] selectedCustomerData {0}", selectedCustomerData);
-        logger.log(Level.INFO, "[Save] dietName {0}",dietDAO.getDietName());
-        logger.log(Level.INFO, "[Save] mealDescription {0}",dietDAO.getMealDescription());
-        logger.log(Level.INFO, "[Save] !!selectedAlimentsDB {0}",selectedAlimentsDB);
+        DietDataDAO item = new DietDataDAO();
+        
+        List<Aliment> alimentsDAO = new ArrayList();
+        alimentsDAO.addAll(selectedAlimentsDB);
+        item.setCustomerData(selectedCustomerData);
+        item.setAliments(alimentsDAO);
+        item.setDietName(dietDAO.getDietName());
+        item.setMealDescription(dietDAO.getMealDescription());
+        item.setMealName(dietDAO.getMealName());
+        dietDB.create(item); 
         addDetailMessage("Salvo!");
     }
     

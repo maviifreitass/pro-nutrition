@@ -36,9 +36,12 @@ public class DietPlanDB {
 
     @Inject
     private EntityManager em;
+    
+    @Inject
+    private MealsPlanDB mealsPlanDB;
 
-    private DietPlan dietPlan;
-    private Meals meals;
+    private DietPlan dietPlan = new DietPlan();
+    private Meals meals = new Meals();
 
     /**
      * Busca um plano de dieta pelo ID.
@@ -89,8 +92,11 @@ public class DietPlanDB {
      * @param item Os dados necessários para criar o plano de dieta.
      */
     public void create(DietDataDAO item) {
+        EntityTransaction transaction = em.getTransaction();
+
+        transaction.begin(); // Inicia a transação
+
         dietPlan.setCreateTime(new Date());
-        dietPlan.setUpdateTime(new Date());
         dietPlan.setName(item.getDietName());
 
         em.persist(dietPlan);
@@ -101,11 +107,13 @@ public class DietPlanDB {
 
         em.persist(meals);
 
+        transaction.commit();
+        
         MealsPlan mealsPlan = new MealsPlan();
         mealsPlan.setDietPlan(dietPlan);
         mealsPlan.setMeals(meals);
-
-        em.persist(mealsPlan);
+        
+        mealsPlanDB.create(mealsPlan);
 
         for (Aliment food : item.getAliments()) {
             MealsItems mealItem = new MealsItems();
@@ -117,6 +125,7 @@ public class DietPlanDB {
 
         CustomerData customerData = item.getCustomerData();
         customerData.setDietPlan(dietPlan);
+        customerData = em.merge(customerData);
         em.persist(customerData);
     }
 

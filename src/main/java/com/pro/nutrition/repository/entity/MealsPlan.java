@@ -4,25 +4,29 @@
  */
 package com.pro.nutrition.repository.entity;
 
+import jakarta.persistence.EmbeddedId;
 import java.io.Serializable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
  *
  * @author maria
  */
-// @Entity
+@Entity
 @Table(name = "meals_plan")
 public class MealsPlan implements Serializable {
+    
+    @EmbeddedId
+    private Integer id;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "diet_plan_id")
     private DietPlan dietPlan;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "meals_id")
     private Meals meals;
 

@@ -34,12 +34,6 @@ public class CustomerDB implements Serializable {
     @Inject
     private EntityManager em;
 
-    @Inject
-    private UserDB userDB;
-
-    @Inject
-    private DietPlanDB dietPlanDB;
-
     /**
      * Construtor padrão da classe CustomerDB.
      */
