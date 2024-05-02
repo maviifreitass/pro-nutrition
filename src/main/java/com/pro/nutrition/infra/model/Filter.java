@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.infra.model;
+package com.pro.nutrition.infra.model;
 
 
 import java.io.Serializable;

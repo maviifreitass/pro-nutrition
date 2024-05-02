@@ -9,7 +9,7 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-import com.github.adminfaces.starter.infra.model.Filter;
+import com.pro.nutrition.infra.model.Filter;
 import static com.pro.nutrition.util.Utils.addDetailMessage;
 import com.pro.nutrition.repository.entity.CustomerData;
 import com.pro.nutrition.repository.entity.db.CustomerDB;

@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
  * @author maria
  */
 @Entity
-@Table(name = "meals_items")
+@Table(name = "meal_items")
 public class MealsItems implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public class MealsItems implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "meals_id")
+    @JoinColumn(name = "meal_id")
     @ManyToOne
     private Meals meals;
 

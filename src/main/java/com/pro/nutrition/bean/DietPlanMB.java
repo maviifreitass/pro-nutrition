@@ -70,7 +70,7 @@ public class DietPlanMB implements Serializable {
 
     /**
      * Salva o plano de dieta.
-     * Este método imprime os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
+     * Este método salva os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
      */
     public void save() {
         DietDataDAO item = new DietDataDAO();

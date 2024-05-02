@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.infra.security;
+package com.pro.nutrition.infra.security;
 
 import com.github.adminfaces.template.session.AdminSession;
 import org.omnifaces.util.Faces;

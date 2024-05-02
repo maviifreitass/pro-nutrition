@@ -94,7 +94,7 @@ public class DietPlanDB {
     public void create(DietDataDAO item) {
         EntityTransaction transaction = em.getTransaction();
 
-        transaction.begin(); // Inicia a transação
+        transaction.begin(); 
 
         dietPlan.setCreateTime(new Date());
         dietPlan.setName(item.getDietName());
@@ -107,7 +107,7 @@ public class DietPlanDB {
 
         em.persist(meals);
 
-        transaction.commit();
+//        transaction.commit();
         
         MealsPlan mealsPlan = new MealsPlan();
         mealsPlan.setDietPlan(dietPlan);
@@ -115,6 +115,7 @@ public class DietPlanDB {
         
         mealsPlanDB.create(mealsPlan);
 
+//        transaction.begin(); 
         for (Aliment food : item.getAliments()) {
             MealsItems mealItem = new MealsItems();
             mealItem.setCreateTime(new Date());
@@ -127,6 +128,7 @@ public class DietPlanDB {
         customerData.setDietPlan(dietPlan);
         customerData = em.merge(customerData);
         em.persist(customerData);
+        transaction.commit();
     }
 
 }

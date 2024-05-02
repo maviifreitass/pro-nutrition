@@ -14,13 +14,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- *
- * @author maria
+ * Classe de repositório do banco de dados que irá estabelecer o cadastro de
+ * refeições
  */
 @Named
 @ApplicationScoped
 public class MealsPlanDB implements Serializable {
 
+    /**
+     * Salva a refeição.
+     *
+     * @param meals A refeição a ser salva.
+     */
     public void create(MealsPlan meals) {
         String sql
                 = "INSERT INTO meals_plan "
