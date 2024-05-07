@@ -52,18 +52,6 @@
                                 </p:selectOneMenu>
                             </div>
                         </div>
-
-                        <div class="ui-sm-12 ui-g-6 ui-g-nopad">
-                            <div class="ui-sm-12 ui-g-11">
-                                <p:outputLabel value="Nome da Dieta" for="inptDiet"/>
-                            </div>
-                            <div class="ui-sm-12 ui-g-11" >
-                                <p:inputText id="inptDiet" value="#{dietPlanMB.dietDAO.dietName}" required="true"/>
-                                <span class="help-block"> 
-                                    <p:message for="inptDiet" /> 
-                                </span> 
-                            </div>
-                        </div>
                         
                         <ui:include src="/WEB-INF/templates/meals.xhtml" />
 

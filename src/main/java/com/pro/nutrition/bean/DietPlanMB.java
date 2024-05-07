@@ -67,13 +67,14 @@ public class DietPlanMB implements Serializable {
         selectedAlimentsDB.addAll(selectedAliments);
         selectedAlimentsDB.retainAll(selectedAliments);
     }
-
+     
     /**
      * Salva o plano de dieta.
      * Este método salva os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
      */
-    public void save() {
-        DietDataDAO item = new DietDataDAO();
+     public void save(String mealType) {
+         System.out.println(mealType+ "Imprimiu o meio certo");
+            DietDataDAO item = new DietDataDAO();
         
         List<Aliment> alimentsDAO = new ArrayList();
         alimentsDAO.addAll(selectedAlimentsDB);
@@ -84,7 +85,7 @@ public class DietPlanMB implements Serializable {
         item.setMealName(dietDAO.getMealName());
         dietDB.create(item); 
         addDetailMessage("Salvo!");
-    }
+        }
     
     /**
      * Seleciona um cliente para o plano de dieta.
