@@ -14,13 +14,17 @@ import java.util.List;
  *
  * @author maria
  */
-public class DietDataDAO implements Serializable{
-    
+public class DietDataDAO implements Serializable {
+
     private CustomerData customerData;
     private String dietName;
     private String mealName;
     private String mealDescription;
     private List<Aliment> aliments = new ArrayList();
+    private Integer quantity;
+
+    // DietPlanDB findDietByCustomer()
+    private Aliment aliment;
 
     public CustomerData getCustomerData() {
         return customerData;
@@ -60,6 +64,22 @@ public class DietDataDAO implements Serializable{
 
     public void setAliments(List<Aliment> aliments) {
         this.aliments = aliments;
+    }
+
+    public Aliment getAliment() {
+        return aliment;
+    }
+
+    public void setAliment(Aliment aliment) {
+        this.aliment = aliment;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Override

@@ -21,15 +21,14 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
- * Classe que controla o plano de dieta.
- * Esta classe gerencia as operações relacionadas à criação e manipulação do plano de dieta para os clientes.
+ * Classe que controla o plano de dieta. Esta classe gerencia as operações
+ * relacionadas à criação e manipulação do plano de dieta para os clientes.
  */
 @Named
 @ViewScoped
 public class DietPlanMB implements Serializable {
-    
+
     private static final Logger logger = Logger.getLogger(DietPlanMB.class.getName());
 
     @Inject
@@ -48,12 +47,12 @@ public class DietPlanMB implements Serializable {
     private List<Aliment> aliments;
     private List<Aliment> selectedAliments;
     private Set<Aliment> selectedAlimentsDB = new HashSet<>();
-
+    private List<DietDataDAO> listData = new ArrayList();
     private DietDataDAO dietDAO = new DietDataDAO();
 
     /**
-     * Inicializa o modelo de dados do plano de dieta.
-     * Este método é chamado após a construção da instância da classe.
+     * Inicializa o modelo de dados do plano de dieta. Este método é chamado
+     * após a construção da instância da classe.
      */
     @PostConstruct
     public void initDataModel() {
@@ -62,20 +61,20 @@ public class DietPlanMB implements Serializable {
         customers = customerDB.findAll();
         aliments = alimentDB.findAll();
     }
-    
+
     public void onAlimentSelection() {
         selectedAlimentsDB.addAll(selectedAliments);
         selectedAlimentsDB.retainAll(selectedAliments);
     }
-     
+
     /**
-     * Salva o plano de dieta.
-     * Este método salva os alimentos selecionados, o nome da dieta e a descrição da refeição, além de adicionar uma mensagem de sucesso.
+     * Salva o plano de dieta. Este método salva os alimentos selecionados, o
+     * nome da dieta e a descrição da refeição, além de adicionar uma mensagem
+     * de sucesso.
      */
-     public void save(String mealType) {
-         System.out.println(mealType+ "Imprimiu o meio certo");
-            DietDataDAO item = new DietDataDAO();
-        
+    public void save(String mealType) {
+        DietDataDAO item = new DietDataDAO();
+
         List<Aliment> alimentsDAO = new ArrayList();
         alimentsDAO.addAll(selectedAlimentsDB);
         item.setCustomerData(selectedCustomerData);
@@ -83,12 +82,17 @@ public class DietPlanMB implements Serializable {
         item.setDietName(dietDAO.getDietName());
         item.setMealDescription(dietDAO.getMealDescription());
         item.setMealName(dietDAO.getMealName());
-        dietDB.create(item); 
+        dietDB.create(item);
         addDetailMessage("Salvo!");
-        }
-    
+    }
+
+    public void getDietByCustomer(Long id) {
+        listData = dietDB.findDietByCustomer(id);
+    }
+
     /**
      * Seleciona um cliente para o plano de dieta.
+     *
      * @param car O cliente selecionado.
      */
     public void selectCar(CustomerData car) {

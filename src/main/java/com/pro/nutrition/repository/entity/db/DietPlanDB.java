@@ -20,6 +20,11 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,9 +41,15 @@ public class DietPlanDB {
 
     @Inject
     private EntityManager em;
-    
+
     @Inject
     private MealsPlanDB mealsPlanDB;
+
+    @Inject
+    private CustomerDB customerDB;
+
+    @Inject
+    private AlimentDB alimentDB;
 
     private DietPlan dietPlan = new DietPlan();
     private Meals meals = new Meals();
@@ -94,7 +105,7 @@ public class DietPlanDB {
     public void create(DietDataDAO item) {
         EntityTransaction transaction = em.getTransaction();
 
-        transaction.begin(); 
+        transaction.begin();
 
         dietPlan.setCreateTime(new Date());
         dietPlan.setName(item.getDietName());
@@ -108,11 +119,10 @@ public class DietPlanDB {
         em.persist(meals);
 
 //        transaction.commit();
-        
         MealsPlan mealsPlan = new MealsPlan();
         mealsPlan.setDietPlan(dietPlan);
         mealsPlan.setMeals(meals);
-        
+
         mealsPlanDB.create(mealsPlan);
 
 //        transaction.begin(); 
@@ -131,4 +141,45 @@ public class DietPlanDB {
         transaction.commit();
     }
 
+    public List<DietDataDAO> findDietByCustomer(Long id) {
+        String query
+                = "SELECT c.id as customer_id, d.name as diet_name, d.description as diet_description, "
+                + "m.name as meal_name, m.description as meal_description, a.id as aliment_id, mi.quantity "
+                + "FROM customer_data c "
+                + "JOIN diet_plan d ON c.diet_plan_id = d.id "
+                + "JOIN meals_plan mp ON d.id = mp.diet_plan_id "
+                + "JOIN meals m ON mp.meals_id = m.id "
+                + "JOIN meal_items mi ON m.id = mi.meal_id "
+                + "JOIN aliment a ON mi.aliment_id = a.id "
+                + "where c.id = " + id + " order by m.name asc";
+
+        PostgresWrapper pw = new PostgresWrapper();
+        pw.openPostgresConnection();
+        List<DietDataDAO> list = new ArrayList();
+
+        try {
+            try ( Connection connection = pw.getConnection()) {
+                try (final Statement pwStatement = connection.createStatement()) {
+                    ResultSet result = pwStatement.executeQuery(query);
+                    while (result.next()) {
+                        DietDataDAO dietData = new DietDataDAO();
+                        dietData.setMealName(result.getString("meal_name"));
+                        dietData.setMealDescription(result.getString("meal_description"));
+                        dietData.setDietName(result.getString("diet_name"));
+                        dietData.setCustomerData(customerDB.findById(result.getLong("customer_id")));
+                        dietData.setAliment(alimentDB.findById(result.getLong("aliment_id")));
+                        dietData.setQuantity(result.getInt("quantity"));
+                        list.add(dietData);
+                    }
+                } finally {
+                    pw.closeConnection();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
