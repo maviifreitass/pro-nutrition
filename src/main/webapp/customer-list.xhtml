@@ -30,11 +30,11 @@
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
                         <p:commandButton action="/customer-form?faces-redirect=true" icon="fa fa-plus"
-                                         value="Novo" styleClass="btn-primary"/>
+                                         value="#{text.btn_new}" styleClass="btn-primary"/>
                         <p:spacer width="5"/>
-                        <p:commandButton value="Visualizar" update="@(.ui-dialog)" styleClass="btn-info"
+                        <p:commandButton value="#{text.btn_view}" update="@(.ui-dialog)" styleClass="btn-info"
                                          oncomplete="PF('selectedCustomer').show()" icon="fa fa-search"/>
-                        <p:commandButton value="Deletar" action="#{customerListMB.delete}" update="customersTable" styleClass="btn-danger" icon="fa fa-trash">
+                        <p:commandButton value="#{text.btn_delete}" action="#{customerListMB.delete}" update="customersTable" styleClass="btn-danger" icon="fa fa-trash">
                             <p:confirm header="Confirmation" message="Deseja excluir este paciente?" icon="pi pi-info-circle"/>
                         </p:commandButton>
 
@@ -50,19 +50,19 @@
                                  selection="#{customerListMB.selectedCustomerData}" 
                                  >
 
-                        <p:column headerText="Nome">
+                        <p:column headerText="#{text.lab_name}">
                             #{c.name}
                         </p:column>
-                        <p:column headerText="Altura">
+                        <p:column headerText="#{text.lab_height}">
                             #{c.height}
                         </p:column>
-                        <p:column headerText="Peso">
+                        <p:column headerText="#{text.lab_weight}">
                             #{c.weight}
                         </p:column>
-                        <p:column headerText="Idade">
+                        <p:column headerText="#{text.lab_age}">
                             #{c.age}
                         </p:column>
-                        <p:column headerText="Objetivo">
+                        <p:column headerText="#{text.lab_goal}">
                             #{c.goal}
                         </p:column>
                     </p:dataTable>
@@ -84,11 +84,11 @@
                 <div id="profileContainer">
                     <img src="resources/images/Perfil-Masculino.jpg" alt="Imagem de perfil:" class="profileImage"/>
                     <div class="profileInfo">
-                        <p>Nome: #{customer.name}</p>
-                        <p>Idade: #{customer.age}</p>
-                        <p>Altura: #{customer.height}</p>
-                        <p>Peso: #{customer.weight}</p>
-                        <p>Objetivo: #{customer.goal}</p>
+                        <p>#{text.lab_name}: #{customer.name}</p>
+                        <p>#{text.lab_age}: #{customer.age}</p>
+                        <p>#{text.lab_height}: #{customer.height}</p>
+                        <p>#{text.lab_weight}: #{customer.weight}</p>
+                        <p>#{text.lab_goal}: #{customer.goal}</p>
                     </div>
                 </div>
             </p:dataList>

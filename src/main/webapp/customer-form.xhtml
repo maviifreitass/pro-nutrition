@@ -31,7 +31,7 @@
                 <div class="ui-g ui-fluid">
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad"> 
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Nome" for="inptEmail"/>
+                            <p:outputLabel value="#{text.lab_name}" for="inptEmail"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
                             <p:inputText id="inptEmail" value="#{customerFormMB.customer.name}" required="true"/>
@@ -42,7 +42,7 @@
                     </div>          
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Idade" for="inptAge"/>
+                            <p:outputLabel value="#{text.lab_age}" for="inptAge"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
                             <p:inputNumber id="inptAge" value="#{customerFormMB.customer.age}" required="true"/>
@@ -53,7 +53,7 @@
                     </div> 
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Altura (m)" for="inptHeight"/>
+                            <p:outputLabel value="#{text.lab_height}" for="inptHeight"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
                             <p:column>
@@ -63,7 +63,7 @@
                     </div> 
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Peso (kg)" for="inptWeight"/>
+                            <p:outputLabel value="#{text.lab_weight}" for="inptWeight"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
                             <p:column>
@@ -73,18 +73,18 @@
                     </div>  
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Gênero"/>
+                            <p:outputLabel value="#{text.lab_gender}"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
                             <p:selectOneMenu id="comboBox" value="#{customerFormMB.customer.gender}">
-                                <f:selectItem itemLabel="Feminino" itemValue="Feminino" />
-                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                <f:selectItem itemLabel="#{text.lab_fem}" itemValue="#{text.lab_fem}" />
+                                <f:selectItem itemLabel="#{text.lab_male}" itemValue="#{text.lab_male}" />
                             </p:selectOneMenu>
                         </div>
                     </div>
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Objetivo" for="inptGoal"/>
+                            <p:outputLabel value="#{text.lab_goal}" for="inptGoal"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11" >
                             <p:inputText id="inptGoal" value="#{customerFormMB.customer.goal}" required="true"/>

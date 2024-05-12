@@ -5,16 +5,16 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:tabView>
-        <p:tab title="Café da manhã">
+        <p:tab title="#{text.lab_breakfast}">
             <h:panelGrid>
                 <div class="ui-g ui-fluid">
                     <div>
-                        <p:outputLabel value="Descrição" for="inptDescriptionBreakfast"/>
+                        <p:outputLabel value="#{text.lab_description}" for="inptDescriptionBreakfast"/>
                         <p:inputText id="inptDescriptionBreakfast" value="#{dietPlanMB.dietDAO.mealDescription}" style="width: 500px;"/> 
                     </div>
                     <p:spacer width="5"/>
                     <div>
-                        <p:outputLabel for="alimentsBreakfast" value="Alimento:" />
+                        <p:outputLabel for="alimentsBreakfast" value="#{text.lab_aliment}" />
                         <p:selectManyMenu id="alimentsBreakfast" value="#{dietPlanMB.selectedAliments}" var="aliment" filter="true" filterMatchMode="contains" 
                                           showCheckbox="true" style="width: 800px;">
                             <f:selectItems value="#{dietPlanMB.aliments}" itemLabel="#{aliment.name}" itemValue="#{aliment}"/>
@@ -28,10 +28,10 @@
                 </div>
             </h:panelGrid>
             <div>
-                <p:commandButton value="Salvar Café da Manhã" action="#{dietPlanMB.save('Café da manhã')}" update="@form" icon="fa fa-check" styleClass="btn-primary" />
+                <p:commandButton value="#{text.btn_save_breakfast}" action="#{dietPlanMB.save('Café da manhã')}" update="@form" icon="fa fa-check" styleClass="btn-primary" />
             </div>
         </p:tab>
-        <p:tab title="Almoço">
+        <p:tab title="#{text.lab_lunch}">
             <h:panelGrid>
                 <div class="ui-g ui-fluid">
                     <div>
@@ -40,7 +40,7 @@
                     </div>
                     <p:spacer width="5"/>
                     <div>
-                        <p:outputLabel for="alimentsLunch" value="Alimento:" />
+                        <p:outputLabel for="alimentsLunch" value="#{text.lab_aliment}" />
                         <p:selectManyMenu id="alimentsLunch" value="#{dietPlanMB.selectedAliments}" 
                                           var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
                             <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
@@ -57,11 +57,11 @@
                 </div>
             </h:panelGrid>
             <div>
-                <p:commandButton value="Salvar Almoço" action="#{dietPlanMB.save('Almoço')}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
+                <p:commandButton value="#{text.btn_save_lunch}" action="#{dietPlanMB.save('Almoço')}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
                 </p:commandButton>   
             </div>
         </p:tab>
-        <p:tab title="Janta">
+        <p:tab title="#{text.lab_dinner}">
             <h:panelGrid>
                 <div class="ui-g ui-fluid">
                     <div>
@@ -70,7 +70,7 @@
                     </div>
                     <p:spacer width="5"/>
                     <div>
-                        <p:outputLabel for="alimentsDinner" value="Alimento:" />
+                        <p:outputLabel for="alimentsDinner" value="#{text.lab_aliment}" />
                         <p:selectManyMenu id="alimentsDinner" value="#{dietPlanMB.selectedAliments}" 
                                           var="aliment" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 800px;">
                             <f:selectItems value="#{dietPlanMB.aliments}" var="aliment" 
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </h:panelGrid>
-            <p:commandButton value="Salvar Jantar" action="#{dietPlanMB.save('Janta')}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
+            <p:commandButton value="#{text.btn_save_dinner}" action="#{dietPlanMB.save('Janta')}" update="@form" icon="fa fa-check" styleClass="btn-primary"> 
             </p:commandButton>
         </p:tab>
     </p:tabView>

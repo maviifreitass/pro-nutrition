@@ -6,7 +6,7 @@
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
-        <ui:param name="title" value="Cadastrar Dieta"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <ui:param name="title" value="#{text.menu_registerDiet}"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
 
         <style type="text/css">
             .ui-datatable .ui-datatable-header {
@@ -33,7 +33,7 @@
     </ui:define>
 
     <ui:define name="description">
-        Cadastro de Dietas
+        #{text.txt_field_diet}
     </ui:define>
 
     <ui:define name="body">
@@ -44,7 +44,7 @@
                     <div class="ui-g ui-fluid">
                         <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                             <div class="ui-sm-12 ui-g-11">
-                                <p:outputLabel value="Paciente"/>
+                                <p:outputLabel value="#{text.lab_customer}"/>
                             </div>
                             <div class="ui-sm-12 ui-g-11" >
                                 <p:selectOneMenu id="comboBox" value="#{dietPlanMB.selectedCustomerData}" converter="entityConverter">
@@ -57,7 +57,7 @@
 
                     </div>
                     <div id="main-buttons" class="hidden-sm hidden-xs" style="text-align: right;">
-                        <p:commandButton value="Voltar" immediate="true"
+                        <p:commandButton value="#{text.btn_back}" immediate="true"
                                          action="customer-list?faces-redirect=true"
                                          process="@this"
                                          icon="fa fa-reply"/>
