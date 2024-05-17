@@ -16,7 +16,9 @@ import com.pro.nutrition.repository.entity.db.CustomerDB;
 import com.pro.nutrition.repository.entity.db.DietPlanDB;
 import jakarta.faces.view.ViewScoped;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +51,23 @@ public class DietPlanMB implements Serializable {
     private Set<Aliment> selectedAlimentsDB = new HashSet<>();
     private List<DietDataDAO> listData = new ArrayList();
     private DietDataDAO dietDAO = new DietDataDAO();
+    private Map<Long, Integer> quantityMap = new HashMap<>();
+
+    
+    public void initQuantityMap() {
+        for (Aliment aliment : aliments) {
+            quantityMap.put(aliment.getId(), 0); // Inicialize todas as quantidades como zero
+        }
+    }
+
+    // Métodos getter e setter para o mapa de quantidades
+    public Map<Long, Integer> getQuantityMap() {
+        return quantityMap;
+    }
+
+    public void setQuantityMap(Map<Long, Integer> quantityMap) {
+        this.quantityMap = quantityMap;
+    }
 
     /**
      * Inicializa o modelo de dados do plano de dieta. Este método é chamado

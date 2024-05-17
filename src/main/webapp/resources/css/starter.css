@@ -53,11 +53,10 @@ a#logout {
     z-index: 999; /* Certifique-se de que a imagem esteja na parte superior do layout */
 }
 .profileinfo p{
-    font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-family: Arial, Verdana;
+    font-size: 15px;
+    margin-bottom: 1px;
 }
-
-
 
 
 

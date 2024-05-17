@@ -89,6 +89,14 @@
                         <p>#{text.lab_height}: #{customer.height}</p>
                         <p>#{text.lab_weight}: #{customer.weight}</p>
                         <p>#{text.lab_goal}: #{customer.goal}</p>
+                        <p:commandButton value="Visualizar Dieta" 
+                         action="#{customerListMB.navigateToDietView}" 
+                         update="@(.ui-dialog)" 
+                         oncomplete="PF('selectedCustomer').show()" 
+                         icon="fa fa-eye"
+                         styleClass="btn-info">
+                            <f:param name="parametro" value="#{customerListMB.selectedCustomerData.id}" />
+                        </p:commandButton>
                     </div>
                 </div>
             </p:dataList>
