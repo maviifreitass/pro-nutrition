@@ -10,6 +10,8 @@ import com.pro.nutrition.repository.entity.dao.DietDataDAO;
 import com.pro.nutrition.repository.entity.db.DietPlanDB;
 import jakarta.enterprise.context.RequestScoped;
 import java.util.ArrayList;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.export.Exporter;
 
 /**
  * Classe que controla o plano de dieta. Esta classe gerencia as operações
@@ -21,9 +23,10 @@ public class DietViewMB implements Serializable {
 
     @Inject
     private DietPlanDB dietDB;
-    
+
     private CustomerData customer;
     private List<DietDataDAO> listData = new ArrayList();
+    private Exporter<DataTable> textExporter;
 
     public void getDietByCustomer(Long id) {
         listData = dietDB.findDietByCustomer(id);
@@ -51,6 +54,14 @@ public class DietViewMB implements Serializable {
 
     public List<DietDataDAO> getListData() {
         return listData;
+    }
+
+    public Exporter<DataTable> getTextExporter() {
+        return textExporter;
+    }
+
+    public void setTextExporter(Exporter<DataTable> textExporter) {
+        this.textExporter = textExporter;
     }
 
 }
