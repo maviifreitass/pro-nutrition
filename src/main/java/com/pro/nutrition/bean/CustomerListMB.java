@@ -49,6 +49,12 @@ public class CustomerListMB implements Serializable {
         filter = new Filter<>(new CustomerData());
     }
 
+    // Método para definir o cliente selecionado e navegar para a página de visualização da dieta
+    public String setSelectedCustomerDataAndNavigate() {
+        // Adicionar lógica aqui se necessário
+        return "diet-view.xhtml?faces-redirect=true&parametro=" + selectedCustomerData.getId();
+    }
+    
     /**
      * Remove um cliente da lista.
      * Além de remover o cliente, uma mensagem de sucesso é adicionada.

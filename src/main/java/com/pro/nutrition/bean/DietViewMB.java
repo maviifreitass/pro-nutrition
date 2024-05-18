@@ -29,4 +29,28 @@ public class DietViewMB implements Serializable {
         listData = dietDB.findDietByCustomer(id);
     }
 
+    public void setDietDB(DietPlanDB dietDB) {
+        this.dietDB = dietDB;
+    }
+
+    public void setCustomer(CustomerData customer) {
+        this.customer = customer;
+    }
+
+    public void setListData(List<DietDataDAO> listData) {
+        this.listData = listData;
+    }
+
+    public DietPlanDB getDietDB() {
+        return dietDB;
+    }
+
+    public CustomerData getCustomer() {
+        return customer;
+    }
+
+    public List<DietDataDAO> getListData() {
+        return listData;
+    }
+
 }

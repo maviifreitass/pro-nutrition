@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <head>
         <title>Dieta do Paciente</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,10 +14,53 @@
             <f:view>
                 <f:metadata>
                     <f:viewParam name="parametro" value="#{DietViewMB.getDietByCustomer(id)}"/>
-                </f:metadata>
+                </f:metadata>   
 
-                <!-- Resto do seu conteúdo aqui -->
+                <h:form>
+                    <h1>Detalhes da Dieta</h1>
+                    <h:outputText value="ID do Cliente: #{dietViewMB.customerId}" />
+                    <p:dataView var="diet" value="#{DietViewMB.listData}"
+                                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
+                        <p:dataViewGridItem>
+                            <f:facet name="{Exporters}">
+                                <div style="float:right;padding-top: 5px;">
+
+                                    <h:commandLink>
+                                        <p:dataExporter type="pdf" target="tbl" fileName="diet"/>
+                                    </h:commandLink>
+
+                                </div>
+                            </f:facet>
+                            <p:panel header="#{diet.id}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+
+                                    <h:outputText value="#{diet.name}" />
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataViewGridItem>
+
+                        <p:dataViewListItem>
+                            <h:panelGrid columns="1" style="width:100%" columnClasses="logo,detail">
+
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Café da manhã:" />
+                                        <h:outputText value="#{diet.mealName}" style="font-weight: bold"/>
+
+                                        <h:outputText value="Alimentos:" />
+                                        <h:outputText value="#{diet.aliment}" style="font-weight: bold"/>
+
+                                        <h:outputText value="Quantidade:" />
+                                        <h:outputText value="#{diet.quantity}" style="font-weight: bold"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                            </h:panelGrid>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </h:form>
             </f:view>
         </h:form>
     </body>
